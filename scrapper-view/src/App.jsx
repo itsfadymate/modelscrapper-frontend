@@ -87,7 +87,14 @@ function App() {
       <Navbar onSearch={handleSearch} />
       
       <div className="search-results">
-        {isLoading && <div className="loading">Loading...</div>}
+        {isLoading && (
+          <div className="loading-container">
+            <div className="loading-bar">
+              <div className="loading-progress"></div>
+            </div>
+            <p>Searching for models...</p>
+          </div>
+        )}
         
         {!isLoading && searchResults.length > 0 && (
           <div className="results-container">
