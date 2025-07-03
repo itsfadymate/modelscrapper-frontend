@@ -3,9 +3,11 @@ import './Modelpreview.css';
 function Modelpreview({imagelink,modelname,websitename,websitelink}){
   return (
     <div className="model-preview">
-      <img src={imagelink} alt={modelname} className="model-image" />
-      <h2 className="model-name">{modelname}</h2>
-      <a href={websitelink} className="model-link">{websitename}</a>
+      <a href={websitelink} className="model-link">
+        <img src={imagelink} alt={modelname} className="model-image" />
+        <h2 className="model-name">{modelname}</h2>
+        {websitename}
+      </a>
     </div>
   );
 };
