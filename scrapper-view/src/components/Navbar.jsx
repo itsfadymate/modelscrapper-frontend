@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import './Navbar.css';
 
-function Navbar() {
+function Navbar({ onSearch }) {
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = () => {
     console.log('Searching for:', searchQuery);
-    // Add your search logic here
+    if (onSearch && searchQuery.trim()) {
+      onSearch(searchQuery.trim());
+    }
   };
 
   const handleKeyPress = (e) => {
