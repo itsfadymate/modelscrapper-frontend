@@ -10,6 +10,10 @@ function App() {
   const handleSearch = async (query) => {
     setIsLoading(true);
     // Simulate API call for now
+
+    const randomDelay = Math.random() * 10000 + 1000; // 1000-3000ms
+    await new Promise(resolve => setTimeout(resolve, randomDelay));
+    
     try {
       const mockResults = [
         {
