@@ -1,12 +1,12 @@
 import './Modelpreview.css';
 
-function Modelpreview({imagelink,modelname,websitename,websitelink}){
+function Modelpreview({imageLink,modelName,websiteName,websiteLink}){
   return (
     <div className="model-preview">
-      <a href={websitelink} className="model-link">
-        <img src={imagelink} alt={modelname} loading="lazy" className="model-image" />
-        <h2 className="model-name">{modelname}</h2>
-        {websitename}
+      <a href={websiteLink} target="_blank" className="model-link">
+        <img src={imageLink} alt={modelName} loading="lazy" className="model-image" />
+        <h2 className="model-name">{modelName}</h2>
+        {websiteName}
       </a>
     </div>
   );
