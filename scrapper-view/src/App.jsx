@@ -9,12 +9,29 @@ function App() {
   const [currentPage, setCurrentPage] = useState(1);
   const resultsPerPage = 20;
 
-  const handleSearch = async (query) => {
+  const handleSearch = async (query, selectedWebsites = [], showFreeOnly = false) => {
     setIsLoading(true);
     setCurrentPage(1); 
     
     try {
-      const results = await fetch(import.meta.env.VITE_API_BASE_URL + '/api/models/search?searchTerm=' + encodeURIComponent(query))
+    
+      const baseUrl = import.meta.env.VITE_API_BASE_URL + '/api/models/search';
+      const params = new URLSearchParams({
+        searchTerm: query
+      });
+      
+      if (selectedWebsites.length > 0) {
+        params.append('websites', selectedWebsites.join(','));
+      }
+      
+      if (showFreeOnly) {
+        params.append('freeOnly', 'true');
+      }
+      
+      const apiUrl = `${baseUrl}?${params.toString()}`;
+      console.log('API URL:', apiUrl);
+      
+      const results = await fetch(apiUrl)
         .then(response => response.json())
         .catch(() => []);
 
