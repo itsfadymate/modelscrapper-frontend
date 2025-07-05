@@ -3,6 +3,8 @@ import './Navbar.css';
 
 function Navbar({ onSearch }) {
   const [searchQuery, setSearchQuery] = useState('');
+  const [showFilter, setShowFilter] = useState(false);
+  
 
   const handleSearch = () => {
     console.log('Searching for:', searchQuery);
@@ -32,6 +34,13 @@ function Navbar({ onSearch }) {
           onKeyPress={handleKeyPress}
           className="search-input"
         />
+        <button
+          onClick={() => setShowFilter(!showFilter)}
+          className="filter-button"
+        >
+          Filter
+        </button>
+
         <button 
           onClick={handleSearch}
           className="search-button"
