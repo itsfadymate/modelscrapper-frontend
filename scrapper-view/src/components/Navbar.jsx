@@ -5,12 +5,16 @@ import FilterOverlay from './FilterOverlay';
 function Navbar({ onSearch }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilter, setShowFilter] = useState(false);
-  
+  const [selectedWebsites, setSelectedWebsites] = useState([]);
+  const [showFreeOnly, setShowFreeOnly] = useState(false);
 
   const handleSearch = () => {
     console.log('Searching for:', searchQuery);
+    console.log('Selected websites:', selectedWebsites);
+    console.log('Show free only:', showFreeOnly);
+    
     if (onSearch && searchQuery.trim()) {
-      onSearch(searchQuery.trim());
+      onSearch(searchQuery.trim(), selectedWebsites, showFreeOnly);
     }
   };
 
@@ -20,7 +24,9 @@ function Navbar({ onSearch }) {
     }
   };
 
-  const handleApplyFilter = () => {
+  const handleApplyFilter = (websites, freeOnly) => {
+    setSelectedWebsites(websites);
+    setShowFreeOnly(freeOnly);
     setShowFilter(false);
   };
 
@@ -43,7 +49,7 @@ function Navbar({ onSearch }) {
           onClick={() => setShowFilter(!showFilter)}
           className="filter-button"
         >
-          Filter
+          Filter {(selectedWebsites.length > 0 || showFreeOnly) && `(${selectedWebsites.length}${showFreeOnly ? ', Free Only' : ''})`}
         </button>
 
         <button 
