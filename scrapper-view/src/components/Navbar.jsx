@@ -21,7 +21,6 @@ function Navbar({ onSearch }) {
   };
 
   const handleApplyFilter = () => {
-    
     setShowFilter(false);
   };
 
