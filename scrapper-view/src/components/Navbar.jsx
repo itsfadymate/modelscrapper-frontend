@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './Navbar.css';
+import FilterOverlay from './FilterOverlay';
 
 function Navbar({ onSearch }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -17,6 +18,11 @@ function Navbar({ onSearch }) {
     if (e.key === 'Enter') {
       handleSearch();
     }
+  };
+
+  const handleApplyFilter = () => {
+    
+    setShowFilter(false);
   };
 
   return (
@@ -48,7 +54,12 @@ function Navbar({ onSearch }) {
           Search
         </button>
       </div>
-      
+      {showFilter && (
+        <FilterOverlay
+          onClose={() => setShowFilter(false)}
+          onApply={handleApplyFilter}
+        />
+      )}
     </nav>
   );
 }
