@@ -5,7 +5,12 @@ import FilterOverlay from './FilterOverlay';
 function Navbar({ onSearch }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilter, setShowFilter] = useState(false);
-  const [selectedWebsites, setSelectedWebsites] = useState([]);
+  const [selectedWebsites, setSelectedWebsites] = useState([
+    'thingiverse', 
+    'MakerWorld', 
+    'myminifactory', 
+    'cults3d', 
+  ]);
   const [showFreeOnly, setShowFreeOnly] = useState(false);
 
   const handleSearch = () => {
@@ -63,6 +68,8 @@ function Navbar({ onSearch }) {
         <FilterOverlay
           onClose={() => setShowFilter(false)}
           onApply={handleApplyFilter}
+          initialSelectedWebsites={selectedWebsites}
+          initialShowFreeOnly={showFreeOnly}
         />
       )}
     </nav>

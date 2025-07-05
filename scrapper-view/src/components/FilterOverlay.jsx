@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import './FilterOverlay.css';
 
-function FilterOverlay({ onClose, onApply }) {
-  const [selectedWebsites, setSelectedWebsites] = useState([]);
-  const [showFreeOnly, setShowFreeOnly] = useState(false);
+function FilterOverlay({ onClose, onApply, initialSelectedWebsites = [], initialShowFreeOnly = false }) {
+  const [selectedWebsites, setSelectedWebsites] = useState(initialSelectedWebsites);
+  const [showFreeOnly, setShowFreeOnly] = useState(initialShowFreeOnly);
 
 
   const availableWebsites = [
-    { id: 'thingiverse', name: 'Thingiverse' },
-    { id: 'MakerWorld', name: 'MakerWorld' },
-    { id: 'myminifactory', name: 'MyMiniFactory' },
-    { id: 'cults3d', name: 'Cults3D'},
-    { id: 'GrabCad', name: 'GrabCad' },
+    { id: 'thingiverse', },
+    { id: 'MakerWorld' },
+    { id: 'myminifactory' },
+    { id: 'cults3d'},
+    { id: 'GrabCad'},
   ];
 
   const handleWebsiteToggle = (websiteId) => {
@@ -69,7 +69,7 @@ function FilterOverlay({ onClose, onApply }) {
                     onChange={() => handleWebsiteToggle(website.id)}
                     className="website-checkbox"
                   />
-                  <span className="website-name">{website.name}</span>
+                  <span className="website-name">{website.id}</span>
                 </label>
               </div>
             ))}
