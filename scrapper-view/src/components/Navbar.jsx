@@ -49,7 +49,7 @@ function Navbar({ onSearch }) {
           onClick={() => setShowFilter(!showFilter)}
           className="filter-button"
         >
-          Filter {(selectedWebsites.length > 0 || showFreeOnly) && `(${selectedWebsites.length}${showFreeOnly ? ', Free Only' : ''})`}
+          Filter {(selectedWebsites.length > 0 || showFreeOnly) && `(${selectedWebsites.length} websites ${showFreeOnly ? ', Free Only' : ''})`}
         </button>
 
         <button 

@@ -12,8 +12,101 @@
   background: #fff;
   padding: 2rem;
   border-radius: 12px;
-  min-width: 320px;
+  min-width: 400px;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
   box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+
+.filter-section {
+  margin-bottom: 1.5rem;
+}
+
+.filter-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter-checkbox:hover {
+  background: #e9ecef;
+}
+
+.filter-checkbox input {
+  width: 18px;
+  height: 18px;
+  accent-color: #9edc29;
+  cursor: pointer;
+}
+
+.filter-section h3 {
+  margin: 0 0 1rem 0;
+  color: #275559;
+  font-size: 1.1rem;
+}
+
+.select-all-container {
+  margin-bottom: 1rem;
+}
+
+.select-all-btn {
+  padding: 0.5rem 1rem;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #275559;
+  transition: all 0.3s ease;
+}
+
+.select-all-btn:hover {
+  background: #e9ecef;
+}
+
+.website-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.website-item {
+  padding: 0.75rem;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.website-item:hover {
+  background: #f8f9fa;
+  border-color: #9edc29;
+}
+
+.website-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.website-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: #9edc29;
+  cursor: pointer;
+}
+
+.website-name {
+  font-weight: 600;
+  color: #275559;
 }
 
 .filter-actions {
@@ -24,10 +117,12 @@
 }
 
 .apply-btn, .close-btn {
-  padding: 0.5rem 1.5rem;
+  padding: 0.75rem 1.5rem;
   border-radius: 6px;
   border: none;
   cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
 }
 
 .apply-btn {
@@ -36,7 +131,33 @@
   font-weight: bold;
 }
 
+.apply-btn:hover {
+  background: #8bc326;
+}
+
 .close-btn {
   background: #eee;
   color: #333;
+}
+
+.close-btn:hover {
+  background: #ddd;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .filter-overlay {
+    min-width: 90vw;
+    max-width: 90vw;
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .filter-actions {
+    flex-direction: column;
+  }
+  
+  .apply-btn, .close-btn {
+    width: 100%;
+  }
 }
