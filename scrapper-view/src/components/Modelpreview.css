@@ -6,6 +6,9 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   width: 300px;
   margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .model-preview:hover {
@@ -13,36 +16,140 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
-.model-image {
+.model-link {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  flex-grow: 1;
+}
+
+.model-image-container {
+  position: relative;
   width: 100%;
   height: 200px;
+  overflow: hidden;
+}
+
+.model-image {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   background-color: #f8f9fa;
+  transition: transform 0.3s ease;
+}
+
+.model-preview:hover .model-image {
+  transform: scale(1.05);
+}
+
+.price-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: #9edc29;
+  color: #275559;
+  padding: 0.4rem 0.8rem;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(158, 220, 41, 0.3);
+  z-index: 10;
+}
+
+.free-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: #28a745;
+  color: #FFFFFF;
+  padding: 0.4rem 0.8rem;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+  z-index: 10;
+}
+
+.makes-count {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background-color: rgba(39, 85, 89, 0.9);
+  color: #FFFFFF;
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  backdrop-filter: blur(4px);
+}
+
+.model-info {
+  padding: 1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .model-name {
-  padding: 1rem;
   margin: 0;
   font-size: 1.2rem;
   font-weight: 600;
   color: #275559;
-  text-align: center;
-  border-bottom: 1px solid #e9ecef;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.model-link {
-  display: block;
-  padding: 0.75rem 1rem;
-  text-decoration: none;
-  color: #9edc29;
+.model-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.website-name {
   font-weight: 500;
-  text-align: center;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  text-transform: capitalize;
 }
 
-.model-link:hover {
-  background-color: #f8f9fa;
+.makes-info {
+  font-size: 0.85rem;
   color: #275559;
+  font-weight: 600;
+}
+
+.view-details-btn {
+  margin: 0 1rem 1rem 1rem;
+  padding: 0.75rem 1rem;
+  background-color: #275559;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.view-details-btn:hover {
+  background-color: #1e4147;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(39, 85, 89, 0.3);
+}
+
+.view-details-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(39, 85, 89, 0.2);
 }
 
 /* Responsive design */
@@ -51,4 +158,75 @@
     width: 100%;
     margin: 0.5rem 0;
   }
+  
+  .model-image-container {
+    height: 180px;
+  }
+  
+  .model-info {
+    padding: 0.75rem;
+  }
+  
+  .model-name {
+    font-size: 1.1rem;
+  }
+  
+  .model-meta {
+    font-size: 0.8rem;
+  }
+  
+  .makes-info {
+    font-size: 0.75rem;
+  }
+  
+  .view-details-btn {
+    margin: 0 0.75rem 0.75rem 0.75rem;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
+  
+  .price-tag, .free-tag {
+    top: 8px;
+    right: 8px;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+  }
+  
+  .makes-count {
+    bottom: 8px;
+    left: 8px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .model-preview {
+    min-height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .model-preview {
+    min-height: 320px;
+  }
+}
+
+/* Hover effects */
+.model-preview:hover .view-details-btn {
+  background-color: #9edc29;
+  color: #275559;
+}
+
+.model-preview:hover .price-tag {
+  background-color: #8bc326;
+}
+
+.model-preview:hover .free-tag {
+  background-color: #218838;
+}
+
+.model-preview:hover .makes-count {
+  background-color: rgba(158, 220, 41, 0.9);
+  color: #275559;
 }
