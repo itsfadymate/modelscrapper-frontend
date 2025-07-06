@@ -85,6 +85,9 @@ function App() {
                   modelName={result.modelName}
                   websiteName={result.websiteName}
                   websiteLink={result.websiteLink}
+                  price={result.price}
+                  makes={result.makesCount}
+                  files={result.files}
                 />
               ))}
             </div>
