@@ -8,10 +8,10 @@ function FilterOverlay({ onClose, onApply, initialSelectedWebsites = [], initial
 
   const availableWebsites = [
     { id: 'thingiverse', },
-    { id: 'MakerWorld' },
+    { id: 'makerworld' },
     { id: 'myminifactory' },
     { id: 'cults3d'},
-    { id: 'GrabCad'},
+    { id: 'grabcad'},
   ];
 
   const handleWebsiteToggle = (websiteId) => {
