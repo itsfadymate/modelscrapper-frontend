@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import JSZip from 'jszip';
 import './ModelDetailsOverlay.css';
 
 function ModelDetailsOverlay({ files = [], modelName, onClose }) {
@@ -35,15 +36,41 @@ function ModelDetailsOverlay({ files = [], modelName, onClose }) {
     setDownloadingAll(true);
     
     try {
-      for (const file of files) {
+      const zip = new JSZip();
+  
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
         if (file.downloadUrl) {
-          await handleDownloadFile(file);
-          // Small delay between downloads to prevent overwhelming the browser
-          await new Promise(resolve => setTimeout(resolve, 100));
+          console.log(`Fetching file ${i + 1}/${files.length}: ${file.name}`);
+          
+          try {
+            const response = await fetch(file.downloadUrl);
+            if (response.ok) {
+              const blob = await response.blob();
+              zip.file(file.name, blob);
+            } else {
+              console.error(`Failed to fetch ${file.name}: ${response.status}`);
+            }
+          } catch (error) {
+            console.error(`Error fetching ${file.name}:`, error);
+          }
         }
       }
+      
+      const zipBlob = await zip.generateAsync({ type: 'blob' });
+
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(zipBlob);
+      link.download = `${modelName || 'model-files'}.zip`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      URL.revokeObjectURL(link.href);
+      
+      console.log('Zip download completed');
     } catch (error) {
-      console.error('Download all failed:', error);
+      console.error('Zip creation failed:', error);
     } finally {
       setDownloadingAll(false);
     }
