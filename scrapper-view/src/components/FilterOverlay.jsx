@@ -8,7 +8,7 @@ function FilterOverlay({ onClose, onApply, initialSelectedWebsites = [], initial
 
   const availableWebsites = [
     { id: 'thingiverse', },
-    { id: 'makerworld' },
+    { id: 'thangs' },
     { id: 'myminifactory' },
     { id: 'cults3d'},
     { id: 'grabcad'},

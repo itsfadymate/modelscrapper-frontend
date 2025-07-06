@@ -4,7 +4,14 @@ import ModelDetailsOverlay from './ModelDetailsOverlay';
 
 function Modelpreview({ imageLink, modelName, websiteName, websiteLink, price, makes, files = [] }) {
   const [showDetails, setShowDetails] = useState(false);
-  const parsedPrice = typeof price === 'string' ? parseFloat(price) : price;
+  const cleanPrice = (price) => {
+    if (typeof price === 'number') return price;
+    if (typeof price === 'string') {
+      return parseFloat(price.replace(/[€$£¥¢₹\s,]/g, ''));
+    }
+    return 0;
+  };
+   const parsedPrice = cleanPrice(price);
   const isFree = !parsedPrice || parsedPrice === 0;
   
   const handleViewDetails = (e) => {
@@ -29,19 +36,14 @@ function Modelpreview({ imageLink, modelName, websiteName, websiteLink, price, m
                 FREE
               </div>
             )}
-            {makes && makes > 0 && (
-              <div className="makes-count">
+            <div className="makes-count">
                 {makes} makes
-              </div>
-            )}
+            </div>
           </div>
           <div className="model-info">
             <h2 className="model-name">{modelName}</h2>
             <div className="model-meta">
               <span className="website-name">{websiteName}</span>
-              {makes && makes > 0 && (
-                <span className="makes-info">• {makes} makes</span>
-              )}
             </div>
           </div>
         </a>
