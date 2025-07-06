@@ -21,11 +21,11 @@ function App() {
       });
       
       if (selectedWebsites.length > 0) {
-        params.append('websites', selectedWebsites.join(','));
+        params.append('sources', selectedWebsites.join(','));
       }
       
       if (showFreeOnly) {
-        params.append('freeOnly', 'true');
+        params.append('showFreeOnly', 'true');
       }
       
       const apiUrl = `${baseUrl}?${params.toString()}`;
@@ -34,6 +34,8 @@ function App() {
       const results = await fetch(apiUrl)
         .then(response => response.json())
         .catch(() => []);
+
+     
 
       setSearchResults(results);
     } catch (error) {
