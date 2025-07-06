@@ -1,0 +1,253 @@
+.model-details-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.model-details-overlay {
+  background: #fff;
+  border-radius: 16px;
+  min-width: 500px;
+  max-width: 700px;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.model-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background: #275559;
+  color: white;
+}
+
+.model-details-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.close-btn-x {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.3s ease;
+}
+
+.close-btn-x:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.model-title {
+  padding: 1rem 2rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.model-title h3 {
+  margin: 0;
+  color: #275559;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.model-details-content {
+  padding: 2rem;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.download-all-container {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.download-all-btn {
+  padding: 0.75rem 2rem;
+  background: #9edc29;
+  color: #275559;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.download-all-btn:hover:not(:disabled) {
+  background: #8bc326;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(158, 220, 41, 0.3);
+}
+
+.download-all-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.files-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.file-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.file-item:hover {
+  background: #e9ecef;
+  border-color: #9edc29;
+}
+
+.file-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex-grow: 1;
+}
+
+.file-name {
+  font-weight: 500;
+  color: #275559;
+  font-size: 0.95rem;
+}
+
+.file-size {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.download-btn {
+  padding: 0.5rem;
+  background: #9edc29;
+  color: #275559;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.download-btn:hover:not(:disabled) {
+  background: #8bc326;
+  transform: scale(1.1);
+}
+
+.download-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.downloading {
+  animation: downloadSpin 1s linear infinite;
+}
+
+@keyframes downloadSpin {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+  100% { transform: translateY(0); }
+}
+
+.no-files {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #6c757d;
+}
+
+.no-files p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.model-details-actions {
+  padding: 1.5rem 2rem;
+  background: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close-btn {
+  padding: 0.75rem 1.5rem;
+  background: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background: #5a6268;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .model-details-overlay {
+    min-width: 95vw;
+    max-width: 95vw;
+    margin: 1rem;
+    max-height: 90vh;
+  }
+  
+  .model-details-header {
+    padding: 1rem;
+  }
+  
+  .model-details-header h2 {
+    font-size: 1.2rem;
+  }
+  
+  .model-title {
+    padding: 0.75rem 1rem;
+  }
+  
+  .model-details-content {
+    padding: 1rem;
+  }
+  
+  .file-item {
+    padding: 0.75rem;
+  }
+  
+  .download-all-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .model-details-actions {
+    padding: 1rem;
+  }
+}
