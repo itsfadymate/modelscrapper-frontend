@@ -7,7 +7,7 @@ function Navbar({ onSearch }) {
   const [showFilter, setShowFilter] = useState(false);
   const [selectedWebsites, setSelectedWebsites] = useState([
     'thingiverse', 
-    'MakerWorld', 
+    'makerworld', 
     'myminifactory', 
     'cults3d', 
   ]);
