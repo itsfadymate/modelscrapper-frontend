@@ -152,6 +152,68 @@
   box-shadow: 0 2px 6px rgba(39, 85, 89, 0.2);
 }
 
+.award-tag {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  color: #8b4513;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  z-index: 2;
+}
+
+.stats-badges {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 10;
+}
+
+.stat-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(39, 85, 89, 0.9);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+
+.stat-icon {
+  color: #FFFFFF;
+  margin-bottom: 2px;
+  stroke-width: 2;
+}
+
+.stat-count {
+  font-size: 9px;
+  font-weight: bold;
+  color: #FFFFFF;
+  line-height: 1;
+  text-align: center;
+}
+
+.like-badge {
+  background: rgba(39, 85, 89, 0.9);
+}
+
+.comment-badge {
+  background: rgba(39, 85, 89, 0.9);
+}
+
+
 /* Responsive design */
 @media (max-width: 768px) {
   .model-preview {
@@ -198,6 +260,26 @@
     padding: 0.25rem 0.5rem;
     font-size: 0.75rem;
   }
+  
+  .stats-badges {
+    bottom: 8px;
+    right: 8px;
+    gap: 6px;
+  }
+  
+  .stat-badge {
+    width: 38px;
+    height: 38px;
+  }
+  
+  .stat-icon {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .stat-count {
+    font-size: 8px;
+  }
 }
 
 @media (min-width: 769px) {
@@ -226,7 +308,20 @@
   background-color: #218838;
 }
 
+
 .model-preview:hover .makes-count {
   background-color: rgba(158, 220, 41, 0.9);
+  color: #275559;
+}
+
+.model-preview:hover .stat-badge {
+  background-color: rgba(158, 220, 41, 0.9);
+}
+
+.model-preview:hover .stat-icon {
+  color: #275559;
+}
+
+.model-preview:hover .stat-count {
   color: #275559;
 }
