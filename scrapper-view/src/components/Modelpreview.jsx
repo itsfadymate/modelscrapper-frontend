@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import { Heart, MessageCircle } from 'lucide-react';
 import './Modelpreview.css';
 import ModelDetailsOverlay from './ModelDetailsOverlay';
 
-function Modelpreview({ imageLink, modelName, websiteName, websiteLink, price, makes, files = [] }) {
+function Modelpreview({ imageLink, modelName, websiteName, websiteLink, price, makes, files = [], likeCount = 0, commentCount = 0, isAwardWinning = false }) {
   const [showDetails, setShowDetails] = useState(false);
   const cleanPrice = (price) => {
     if (typeof price === 'number') return price;
@@ -36,8 +37,24 @@ function Modelpreview({ imageLink, modelName, websiteName, websiteLink, price, m
                 FREE
               </div>
             )}
+            {isAwardWinning && (
+              <div className="award-tag">
+                🏆 Award Winner
+              </div>
+            )}
             <div className="makes-count">
                 {makes} makes
+            </div>
+            
+            <div className="stats-badges">
+              <div className="stat-badge like-badge">
+                <Heart className="stat-icon" size={17} />
+                <div className="stat-count">{likeCount}</div>
+              </div>
+              <div className="stat-badge comment-badge">
+                <MessageCircle className="stat-icon" size={17} />
+                <div className="stat-count">{commentCount}</div>
+              </div>
             </div>
           </div>
           <div className="model-info">
