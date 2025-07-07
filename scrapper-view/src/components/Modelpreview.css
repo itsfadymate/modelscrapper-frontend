@@ -177,7 +177,6 @@
 
 .stat-badge {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   background: rgba(39, 85, 89, 0.9);
@@ -190,29 +189,28 @@
   position: relative;
 }
 
-
 .stat-icon {
   color: #FFFFFF;
-  margin-bottom: 2px;
   stroke-width: 2;
 }
 
 .stat-count {
-  font-size: 9px;
-  font-weight: bold;
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+  background: #218838;
   color: #FFFFFF;
-  line-height: 1;
-  text-align: center;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  font-size: 10px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-
-.like-badge {
-  background: rgba(39, 85, 89, 0.9);
-}
-
-.comment-badge {
-  background: rgba(39, 85, 89, 0.9);
-}
-
 
 /* Responsive design */
 @media (max-width: 768px) {
@@ -278,19 +276,11 @@
   }
   
   .stat-count {
+    width: 18px;
+    height: 18px;
     font-size: 8px;
-  }
-}
-
-@media (min-width: 769px) {
-  .model-preview {
-    min-height: 350px;
-  }
-}
-
-@media (max-width: 768px) {
-  .model-preview {
-    min-height: 320px;
+    bottom: -4px;
+    right: -4px;
   }
 }
 
@@ -323,5 +313,6 @@
 }
 
 .model-preview:hover .stat-count {
-  color: #275559;
+  background-color: #275559;
+  color: #FFFFFF;
 }
