@@ -39,7 +39,7 @@ function Modelpreview({ imageLink, modelName, websiteName, websiteLink, price, m
             )}
             {isAwardWinning && (
               <div className="award-tag">
-                🏆 Award Winner
+                🏆 Featured
               </div>
             )}
             <div className="makes-count">
