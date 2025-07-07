@@ -88,6 +88,9 @@ function App() {
                   price={result.price}
                   makes={result.makesCount}
                   files={result.files}
+                  likeCount={result.likeCount}
+                  commentCount={result.commentCount}
+                  isAwardWinning={result.isAwardWinning} 
                 />
               ))}
             </div>
