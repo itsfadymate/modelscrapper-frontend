@@ -7,9 +7,17 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isScrapingSlowWebsite,setIsScrapingSlowWebsite] = useState(false);
   const resultsPerPage = 20;
+  const slowWebsites = ['grabcad','thingiverse'];
 
   const handleSearch = async (query, selectedWebsites = [], showFreeOnly = false) => {
+    for (let website of selectedWebsites){
+      if (slowWebsites.includes(website)){
+        setIsScrapingSlowWebsite(true);
+        break;
+      }
+    }
     setIsLoading(true);
     setCurrentPage(1); 
     
@@ -43,6 +51,7 @@ function App() {
       setSearchResults([]);
     } finally {
       setIsLoading(false);
+      setIsScrapingSlowWebsite(false);
     }
   };
 
@@ -67,7 +76,8 @@ function App() {
             <div className="loading-bar">
               <div className="loading-progress"></div>
             </div>
-            <p>Searching for models...</p>
+            {!isScrapingSlowWebsite && <p>Searching for models...</p>}
+            {isScrapingSlowWebsite && <p>hold on this might take a minute or two...</p>}
           </div>
         )}
         
