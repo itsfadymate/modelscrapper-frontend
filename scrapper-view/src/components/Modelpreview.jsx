@@ -19,11 +19,42 @@ function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price
    const parsedPrice = cleanPrice(price);
   const isFree = !parsedPrice || parsedPrice === 0;
   
-  const handleView3D = (e) => {
+  const handleView3D = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    // TODO: Implement 3D viewer logic
-    console.log('Opening 3D view for:', modelName);
+    
+    
+    let filesToLoad = modelFiles;
+    
+    if (!filesToLoad || filesToLoad.length === 0) {
+      try {
+        const baseUrl = import.meta.env.VITE_API_BASE_URL + '/api/models/download';
+        const params = new URLSearchParams({
+          sourceName: websiteName,
+          id: id
+        });
+        
+        const response = await fetch(`${baseUrl}?${params.toString()}`);
+        filesToLoad = await response.json();
+      } catch (error) {
+        console.error('Error fetching files:', error);
+        filesToLoad = [];
+      }
+    }
+    
+    const supportedFiles = filesToLoad.filter(file => {
+      const ext = file.name.toLowerCase();
+      return ext.endsWith('.stl') || ext.endsWith('.obj') || ext.endsWith('.3mf');
+    });
+    
+    if (supportedFiles.length > 0) {
+      const fileUrls = supportedFiles.map(file => file.downloadUrl);
+      const kiriUrl = `https://grid.space/kiri/?load=${encodeURIComponent(fileUrls.join(','))}`;
+      window.open(kiriUrl, '_blank', 'noopener,noreferrer');
+    } else {
+      window.open('https://grid.space/kiri/', '_blank', 'noopener,noreferrer');
+      alert('No 3D files found. You can manually load files in Kiri:Moto.');
+    }
   };
 
   const handleViewDetails = async (e) => {
