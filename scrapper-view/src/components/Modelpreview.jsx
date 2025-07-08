@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Heart, MessageCircle } from 'lucide-react';
+import { Heart, MessageCircle, Eye, Box } from 'lucide-react';
 import './Modelpreview.css';
 import ModelDetailsOverlay from './ModelDetailsOverlay';
 
@@ -16,6 +16,13 @@ function Modelpreview({ imageLink, modelName, websiteName, websiteLink, price, m
    const parsedPrice = cleanPrice(price);
   const isFree = !parsedPrice || parsedPrice === 0;
   
+  const handleView3D = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // TODO: Implement 3D viewer logic
+    console.log('Opening 3D view for:', modelName);
+  };
+
   const handleViewDetails = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -66,12 +73,23 @@ function Modelpreview({ imageLink, modelName, websiteName, websiteLink, price, m
           </div>
         </a>
         
-        <button 
-          className="view-details-btn"
-          onClick={handleViewDetails}
-        >
-          View Details
-        </button>
+        <div className="model-actions">
+          <button 
+            className="view-details-btn"
+            onClick={handleViewDetails}
+          >
+            <Eye size={16} />
+              Details
+          </button>
+          
+          <button 
+            className="view-3d-btn"
+            onClick={handleView3D}
+          >
+            <Box size={16} />
+            3D View
+          </button>
+        </div>
       </div>
 
       {showDetails && (
