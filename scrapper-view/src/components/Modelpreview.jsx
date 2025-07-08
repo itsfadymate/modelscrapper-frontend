@@ -8,6 +8,7 @@ function Modelpreview({ imageLink, modelName, websiteName, websiteLink, price, m
   const cleanPrice = (price) => {
     if (typeof price === 'number') return price;
     if (typeof price === 'string') {
+      if (price==='paid')return 1;
       return parseFloat(price.replace(/[€$£¥¢₹\s,]/g, ''));
     }
     return 0;
