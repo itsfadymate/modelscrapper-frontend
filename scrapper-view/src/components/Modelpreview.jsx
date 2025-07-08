@@ -3,7 +3,7 @@ import { Heart, MessageCircle, Eye, Box } from 'lucide-react';
 import './Modelpreview.css';
 import ModelDetailsOverlay from './ModelDetailsOverlay';
 
-function Modelpreview({ imageLink, modelName, websiteName, websiteLink, price, makes, files = [], likeCount = 0, commentCount = 0, isAwardWinning = false }) {
+function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price, makes, files = [], likeCount = 0, commentCount = 0, isAwardWinning = false }) {
   const [showDetails, setShowDetails] = useState(false);
   const cleanPrice = (price) => {
     if (typeof price === 'number') return price;
@@ -23,9 +23,20 @@ function Modelpreview({ imageLink, modelName, websiteName, websiteLink, price, m
     console.log('Opening 3D view for:', modelName);
   };
 
-  const handleViewDetails = (e) => {
+  const handleViewDetails = async (e) => {
     e.preventDefault();
     e.stopPropagation();
+    if (!files || files.length === 0){
+      const baseUrl = import.meta.env.VITE_API_BASE_URL + '/api/models/search';
+      const params = new URLSearchParams({
+        sourceName: websiteName,
+        id: id
+      });
+      const fetchedFiles = await fetch(`${baseUrl}?${params.toString()}`)
+      .then(response => response.json())
+      .catch(() => []);
+      files = fetchedFiles; //apparently this is "good practice"
+    }
     setShowDetails(true);
   };
 

@@ -90,7 +90,9 @@ function App() {
             <div className="results-container">
               {currentResults.map((result, index) => (
                 <Modelpreview
+                
                   key={startIndex + index}
+                  id={result.id}
                   imageLink={result.imageLink}
                   modelName={result.modelName}
                   websiteName={result.websiteName}
