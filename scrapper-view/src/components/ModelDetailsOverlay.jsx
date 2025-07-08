@@ -2,7 +2,7 @@ import { useState } from 'react';
 import JSZip from 'jszip';
 import './ModelDetailsOverlay.css';
 
-function ModelDetailsOverlay({ files = [], modelName, onClose }) {
+function ModelDetailsOverlay({ files, modelName, isLoading, onClose }) {
   const [downloadingFiles, setDownloadingFiles] = useState(new Set());
   const [downloadingAll, setDownloadingAll] = useState(false);
 
@@ -105,46 +105,52 @@ function ModelDetailsOverlay({ files = [], modelName, onClose }) {
         )}
 
         <div className="model-details-content">
-          {files.length > 0 ? (
-            <>
-              <div className="download-all-container">
-                <button 
-                  onClick={handleDownloadAll}
-                  disabled={downloadingAll}
-                  className="download-all-btn"
-                >
-                  {downloadingAll ? 'Downloading...' : `Download All (${files.length} files)`}
-                </button>
-              </div>
-
-              <div className="files-list">
-                {files.map((file, index) => (
-                  <div key={file.id || index} className="file-item">
-                    <div className="file-info">
-                      <span className="file-name">{file.name}</span>
-                      {file.size && (
-                        <span className="file-size">({formatFileSize(file.size)})</span>
-                      )}
-                    </div>
-                    <button
-                      onClick={() => handleDownloadFile(file)}
-                      disabled={downloadingFiles.has(file.id || file.name) || !file.downloadUrl}
-                      className="download-btn"
-                    >
-                      {downloadingFiles.has(file.id || file.name) ? (
-                        <span className="downloading">↓</span>
-                      ) : (
-                        '↓'
-                      )}
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </>
-          ) : (
-            <div className="no-files">
-              <p>No files available for this model.</p>
+          {isLoading ? (
+            <div className="loading-container">
+              <div className="loading-spinner"></div>
             </div>
+          ) : (
+            files.length > 0 ? (
+              <>
+                <div className="download-all-container">
+                  <button 
+                    onClick={handleDownloadAll}
+                    disabled={downloadingAll}
+                    className="download-all-btn"
+                  >
+                    {downloadingAll ? 'Downloading...' : `Download All (${files.length} files)`}
+                  </button>
+                </div>
+
+                <div className="files-list">
+                  {files.map((file, index) => (
+                    <div key={file.id || index} className="file-item">
+                      <div className="file-info">
+                        <span className="file-name">{file.name}</span>
+                        {file.size && (
+                          <span className="file-size">({formatFileSize(file.size)})</span>
+                        )}
+                      </div>
+                      <button
+                        onClick={() => handleDownloadFile(file)}
+                        disabled={downloadingFiles.has(file.id || file.name) || !file.downloadUrl}
+                        className="download-btn"
+                      >
+                        {downloadingFiles.has(file.id || file.name) ? (
+                          <span className="downloading">↓</span>
+                        ) : (
+                          '↓'
+                        )}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="no-files">
+                <p>No files available for this model.</p>
+              </div>
+            )
           )}
         </div>
 

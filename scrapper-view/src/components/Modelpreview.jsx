@@ -6,6 +6,8 @@ import ModelDetailsOverlay from './ModelDetailsOverlay';
 function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price, makes, files = [], likeCount = 0, commentCount = 0, isAwardWinning = false }) {
   const [showDetails, setShowDetails] = useState(false);
   const [modelFiles, setModelFiles] = useState(files); 
+  const [isLoadingFiles, setIsLoadingFiles] = useState(false); 
+  
   const cleanPrice = (price) => {
     if (typeof price === 'number') return price;
     if (typeof price === 'string') {
@@ -27,18 +29,30 @@ function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price
   const handleViewDetails = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!files || files.length === 0){
-      const baseUrl = import.meta.env.VITE_API_BASE_URL + '/api/models/search';
-      const params = new URLSearchParams({
-        sourceName: websiteName,
-        id: id
-      });
-      const fetchedFiles = await fetch(`${baseUrl}?${params.toString()}`)
-      .then(response => response.json())
-      .catch(() => []);
-      setModelFiles(fetchedFiles);
+    
+    setShowDetails(true); 
+    
+    if (!modelFiles || modelFiles.length === 0) {
+      setIsLoadingFiles(true);
+      
+      try {
+        const baseUrl = import.meta.env.VITE_API_BASE_URL + '/api/models/download';
+        const params = new URLSearchParams({
+          sourceName: websiteName,
+          id: id
+        });
+        
+        const response = await fetch(`${baseUrl}?${params.toString()}`);
+        const fetchedFiles = await response.json();
+        
+        setModelFiles(fetchedFiles);
+      } catch (error) {
+        console.error('Error fetching files:', error);
+        setModelFiles([]);
+      } finally {
+        setIsLoadingFiles(false);
+      }
     }
-    setShowDetails(true);
   };
 
   return (
@@ -106,8 +120,9 @@ function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price
 
       {showDetails && (
         <ModelDetailsOverlay
-          files={files}
+          files={modelFiles}
           modelName={modelName}
+          isLoading={isLoadingFiles}
           onClose={() => setShowDetails(false)}
         />
       )}
