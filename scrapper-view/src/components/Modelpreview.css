@@ -127,7 +127,7 @@
 }
 
 .view-details-btn {
-  margin: 0 1rem 1rem 1rem;
+
   padding: 0.75rem 1rem;
   background-color: #275559;
   color: #FFFFFF;
@@ -139,6 +139,7 @@
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  flex: 1;
 }
 
 .view-details-btn:hover {
@@ -150,6 +151,32 @@
 .view-details-btn:active {
   transform: translateY(0);
   box-shadow: 0 2px 6px rgba(39, 85, 89, 0.2);
+}
+
+.view-3d-btn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background-color: #9edc29;
+  color: #275559;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.view-3d-btn:hover {
+  background-color: #8bc326;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(158, 220, 41, 0.3);
+}
+
+.view-3d-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(158, 220, 41, 0.2);
 }
 
 .award-tag {
@@ -212,6 +239,12 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+.model-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0 1rem 1rem 1rem;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .model-preview {
@@ -241,6 +274,11 @@
   
   .view-details-btn {
     margin: 0 0.75rem 0.75rem 0.75rem;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
+  
+  .view-3d-btn {
     padding: 0.6rem 0.8rem;
     font-size: 0.85rem;
   }
@@ -282,12 +320,22 @@
     bottom: -4px;
     right: -4px;
   }
+  
+  .model-actions {
+    flex-direction: column;
+    margin: 0 0.75rem 0.75rem 0.75rem;
+  }
 }
 
 /* Hover effects */
 .model-preview:hover .view-details-btn {
   background-color: #9edc29;
   color: #275559;
+}
+
+.model-preview:hover .view-3d-btn {
+  background-color: #275559;
+  color: #FFFFFF;
 }
 
 .model-preview:hover .price-tag {
