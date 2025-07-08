@@ -6,6 +6,13 @@ function ModelDetailsOverlay({ files = [], modelName, onClose }) {
   const [downloadingFiles, setDownloadingFiles] = useState(new Set());
   const [downloadingAll, setDownloadingAll] = useState(false);
 
+  
+  const handleBackdropClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   const handleDownloadFile = async (file) => {
     if (!file.downloadUrl) return;
     
@@ -84,7 +91,7 @@ function ModelDetailsOverlay({ files = [], modelName, onClose }) {
   };
 
   return (
-    <div className="model-details-backdrop">
+    <div className="model-details-backdrop" onClick={handleBackdropClick}>
       <div className="model-details-overlay">
         <div className="model-details-header">
           <h2>Model Files</h2>
