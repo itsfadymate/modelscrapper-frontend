@@ -5,6 +5,7 @@ import ModelDetailsOverlay from './ModelDetailsOverlay';
 
 function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price, makes, files = [], likeCount = 0, commentCount = 0, isAwardWinning = false }) {
   const [showDetails, setShowDetails] = useState(false);
+  const [modelFiles, setModelFiles] = useState(files); 
   const cleanPrice = (price) => {
     if (typeof price === 'number') return price;
     if (typeof price === 'string') {
@@ -35,7 +36,7 @@ function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price
       const fetchedFiles = await fetch(`${baseUrl}?${params.toString()}`)
       .then(response => response.json())
       .catch(() => []);
-      files = fetchedFiles; //apparently this is "good practice"
+      setModelFiles(fetchedFiles);
     }
     setShowDetails(true);
   };
