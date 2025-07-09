@@ -2,11 +2,14 @@ import { useState } from 'react';
 import { Heart, MessageCircle, Eye, Box } from 'lucide-react';
 import './Modelpreview.css';
 import ModelDetailsOverlay from './ModelDetailsOverlay';
+import Kiri3DOverlay from './Kiri3DOverlay';
 
 function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price, makes, files = [], likeCount = 0, commentCount = 0, isAwardWinning = false }) {
   const [showDetails, setShowDetails] = useState(false);
+  const [show3DViewer, setShow3DViewer] = useState(false);
   const [modelFiles, setModelFiles] = useState(files); 
   const [isLoadingFiles, setIsLoadingFiles] = useState(false); 
+  const [isLoading3D, setIsLoading3D] = useState(false);
   
   const cleanPrice = (price) => {
     if (typeof price === 'number') return price;
@@ -23,6 +26,7 @@ function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price
     e.preventDefault();
     e.stopPropagation();
     
+    setIsLoading3D(true);
     
     let filesToLoad = modelFiles;
     
@@ -36,25 +40,15 @@ function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price
         
         const response = await fetch(`${baseUrl}?${params.toString()}`);
         filesToLoad = await response.json();
+        setModelFiles(filesToLoad);
       } catch (error) {
         console.error('Error fetching files:', error);
         filesToLoad = [];
       }
     }
     
-    const supportedFiles = filesToLoad.filter(file => {
-      const ext = file.name.toLowerCase();
-      return ext.endsWith('.stl') || ext.endsWith('.obj') || ext.endsWith('.3mf');
-    });
-    
-    if (supportedFiles.length > 0) {
-      const fileUrls = supportedFiles.map(file => file.downloadUrl);
-      const kiriUrl = `https://grid.space/kiri/?load=${encodeURIComponent(fileUrls.join(','))}`;
-      window.open(kiriUrl, '_blank', 'noopener,noreferrer');
-    } else {
-      window.open('https://grid.space/kiri/', '_blank', 'noopener,noreferrer');
-      alert('No 3D files found. You can manually load files in Kiri:Moto.');
-    }
+    setIsLoading3D(false);
+    setShow3DViewer(true);
   };
 
   const handleViewDetails = async (e) => {
@@ -142,9 +136,10 @@ function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price
           <button 
             className="view-3d-btn"
             onClick={handleView3D}
+            disabled={isLoading3D}
           >
             <Box size={16} />
-            3D View
+            {isLoading3D ? 'Loading...' : '3D View'}
           </button>
         </div>
       </div>
@@ -155,6 +150,14 @@ function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price
           modelName={modelName}
           isLoading={isLoadingFiles}
           onClose={() => setShowDetails(false)}
+        />
+      )}
+
+      {show3DViewer && (
+        <Kiri3DOverlay
+          files={modelFiles}
+          modelName={modelName}
+          onClose={() => setShow3DViewer(false)}
         />
       )}
     </>
