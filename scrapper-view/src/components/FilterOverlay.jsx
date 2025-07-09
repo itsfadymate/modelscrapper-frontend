@@ -12,6 +12,7 @@ function FilterOverlay({ onClose, onApply, initialSelectedWebsites = [], initial
     { id: 'myminifactory' },
     { id: 'cults3d'},
     { id: 'grabcad'},
+    { id: 'sketchfab'}
   ];
 
   const handleWebsiteToggle = (websiteId) => {
