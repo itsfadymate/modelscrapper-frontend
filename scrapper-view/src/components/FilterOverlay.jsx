@@ -15,6 +15,12 @@ function FilterOverlay({ onClose, onApply, initialSelectedWebsites = [], initial
     { id: 'sketchfab'}
   ];
 
+  const handleBackDropClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   const handleWebsiteToggle = (websiteId) => {
     setSelectedWebsites(prev => 
       prev.includes(websiteId) 
@@ -36,7 +42,7 @@ function FilterOverlay({ onClose, onApply, initialSelectedWebsites = [], initial
   };
 
   return (
-    <div className="filter-overlay-backdrop">
+    <div className="filter-overlay-backdrop" onClick={handleBackDropClick}>
       <div className="filter-overlay">
         <h2>Filter Parameters</h2>
         
