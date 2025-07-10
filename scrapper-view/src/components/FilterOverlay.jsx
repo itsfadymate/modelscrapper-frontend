@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './FilterOverlay.css';
 
-function FilterOverlay({ onClose, onApply, initialSelectedWebsites = [], initialShowFreeOnly = false }) {
+function FilterOverlay({ onClose, onApply,onSearch, initialSelectedWebsites = [], initialShowFreeOnly = false }) {
   const [selectedWebsites, setSelectedWebsites] = useState(initialSelectedWebsites);
   const [showFreeOnly, setShowFreeOnly] = useState(initialShowFreeOnly);
 
@@ -84,7 +84,10 @@ function FilterOverlay({ onClose, onApply, initialSelectedWebsites = [], initial
         </div>
 
         <div className="filter-actions">
-          <button onClick={handleApplyFilter} className="apply-btn">
+          <button onClick={()=>{handleApplyFilter();onClose();onSearch();}} className="apply-btn">
+            Apply and search
+          </button>
+          <button onClick={()=>{handleApplyFilter();onClose();}} className="apply-btn">
             Apply Filter
           </button>
           <button onClick={onClose} className="close-btn">Close</button>
