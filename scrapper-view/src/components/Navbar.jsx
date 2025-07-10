@@ -68,7 +68,8 @@ function Navbar({ onSearch }) {
         <FilterOverlay
           onClose={() => setShowFilter(false)}
           onApply={handleApplyFilter}
-          onSearch={handleSearch}
+          onSearch={onSearch}
+          searchQuery={searchQuery}
           initialSelectedWebsites={selectedWebsites}
           initialShowFreeOnly={showFreeOnly}
         />
