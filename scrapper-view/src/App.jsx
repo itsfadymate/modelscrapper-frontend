@@ -2,12 +2,14 @@ import { useState } from 'react'
 import './App.css'
 import Navbar from './components/Navbar'
 import Modelpreview from './components/Modelpreview'
+import HomePage from './components/HomePage';
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isScrapingSlowWebsite,setIsScrapingSlowWebsite] = useState(false);
+  const [showHomePage, setShowHomePage] = useState(true);
   const resultsPerPage = 20;
   const slowWebsites = ['grabcad','thingiverse'];
 
@@ -18,6 +20,7 @@ function App() {
         break;
       }
     }
+    setShowHomePage(false);
     setIsLoading(true);
     setCurrentPage(1); 
     
@@ -68,8 +71,9 @@ function App() {
 
   return (
     <div>
-      <Navbar onSearch={handleSearch} />
-      
+      <Navbar onSearch={handleSearch} setShowHomePage={setShowHomePage}/>
+      {showHomePage && (<HomePage/>)}
+      {!showHomePage && (
       <div className="search-results">
         {isLoading && (
           <div className="loading-container">
@@ -107,7 +111,6 @@ function App() {
               ))}
             </div>
 
-            
             {totalPages > 1 && (
               <div className="pagination">
                 <button 
@@ -143,7 +146,7 @@ function App() {
         {!isLoading && searchResults.length === 0 && (
           <div className="no-results">No results found. Try searching for something!</div>
         )}
-      </div>
+      </div>)}
     </div>
   );
 }
