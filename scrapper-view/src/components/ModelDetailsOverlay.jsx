@@ -6,6 +6,7 @@ function ModelDetailsOverlay({ files, modelName, isLoading, onClose }) {
   const [downloadingFiles, setDownloadingFiles] = useState(new Set());
   const [downloadingAll, setDownloadingAll] = useState(false);
 
+ 
   
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -115,7 +116,7 @@ function ModelDetailsOverlay({ files, modelName, isLoading, onClose }) {
                 <div className="download-all-container">
                   <button 
                     onClick={handleDownloadAll}
-                    disabled={downloadingAll}
+                    disabled={downloadingAll || !files.some(file => file.downloadUrl)}
                     className="download-all-btn"
                   >
                     {downloadingAll ? 'Downloading...' : `Download All (${files.length} files)`}
