@@ -2,14 +2,15 @@ import { useState } from 'react';
 import './Navbar.css';
 import FilterOverlay from './FilterOverlay';
 
-function Navbar({ onSearch }) {
+function Navbar({ onSearch,setShowHomePage }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilter, setShowFilter] = useState(false);
   const [selectedWebsites, setSelectedWebsites] = useState([
     'thingiverse', 
     'thangs', 
     'myminifactory', 
-    'cults3d', 
+    'cults3d',
+    'sketchfab' 
   ]);
   const [showFreeOnly, setShowFreeOnly] = useState(false);
 
@@ -38,7 +39,7 @@ function Navbar({ onSearch }) {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <img src="/logo2.png" alt="Logo" />
+        <img src="/logo2.png" alt="Logo" onClick={() => setShowHomePage(true)} style={{ cursor: 'pointer' }}/>
       </div>
       
       <div className="navbar-search">

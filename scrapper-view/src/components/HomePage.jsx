@@ -43,22 +43,8 @@ function HomePage() {
             <p>
               The 3D Model Scrapper App is designed to streamline your search for 3D models 
               by aggregating results from multiple popular websites. Instead of visiting each 
-              platform individually, our app searches across <strong>Thingiverse</strong>, 
-              <strong>Thangs</strong>, <strong>MyMiniFactory</strong>, and <strong>Cults3D</strong> 
-              simultaneously, bringing you comprehensive results in one convenient location.
+              platform individually. You can now search for models across various sites in one go.
             </p>
-            
-            <div className="features">
-              <h3>Key Features:</h3>
-              <ul>
-                <li>🔍 Search across multiple 3D model websites at once</li>
-                <li>🎛️ Filter results by website and free/paid models</li>
-                <li>📁 Download individual files or entire model packages</li>
-                <li>👁️ View models in our integrated 3D viewer</li>
-                <li>🎨 Slice models for 3D printing with built-in tools</li>
-                <li>⚡ Fast and responsive search results</li>
-              </ul>
-            </div>
             
             <div className="getting-started">
               <h3>Getting Started:</h3>
@@ -66,7 +52,9 @@ function HomePage() {
                 <li>Enter your search term in the search bar above</li>
                 <li>Use the filter button to customize your search preferences</li>
                 <li>Browse results and click on models to view details</li>
+                <li>Click on a model to visit it's product page</li>
                 <li>Download files or use the 3D viewer to explore models</li>
+                
               </ol>
             </div>
           </div>
@@ -76,7 +64,7 @@ function HomePage() {
     
       <div className="faq-section">
         <div className="faq-content">
-          <h2 className="faq-title">Frequently Asked Questions</h2>
+          <h2 className="faq-title">FAQ</h2>
           
           <div className="faq-list">
             {faqData.map((faq, index) => (

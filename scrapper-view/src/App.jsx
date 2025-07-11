@@ -11,7 +11,7 @@ function App() {
   const [isScrapingSlowWebsite,setIsScrapingSlowWebsite] = useState(false);
   const [showHomePage, setShowHomePage] = useState(true);
   const resultsPerPage = 20;
-  const slowWebsites = ['grabcad','thingiverse'];
+  const slowWebsites = ['grabcad'];
 
   const handleSearch = async (query, selectedWebsites = [], showFreeOnly = false) => {
     for (let website of selectedWebsites){

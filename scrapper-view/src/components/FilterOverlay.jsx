@@ -8,11 +8,11 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
 
   const availableWebsites = [
     { id: 'thingiverse', },
-    { id: 'thangs' },
+    { id: 'sketchfab'},
     { id: 'myminifactory' },
     { id: 'cults3d'},
-    { id: 'grabcad'},
-    { id: 'sketchfab'}
+    { id: 'thangs' },
+    { id: 'grabcad'}
   ];
 
   const handleBackDropClick = (e) => {
