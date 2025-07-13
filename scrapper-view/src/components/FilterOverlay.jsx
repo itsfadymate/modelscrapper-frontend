@@ -8,6 +8,7 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
 
   const availableWebsites = [
     { id: 'thingiverse', },
+    {id: 'printables' },
     { id: 'sketchfab'},
     { id: 'myminifactory' },
     { id: 'cults3d'},
