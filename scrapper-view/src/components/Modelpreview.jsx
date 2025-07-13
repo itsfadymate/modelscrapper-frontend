@@ -10,7 +10,9 @@ function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price
   const [modelFiles, setModelFiles] = useState(files); 
   const [isLoadingFiles, setIsLoadingFiles] = useState(false); 
   const [isLoading3D, setIsLoading3D] = useState(false);
-  
+
+  const corsEnforcingWebsites = new Set(['cults3d']);
+
   const cleanPrice = (price) => {
     if (typeof price === 'number') return price;
     if (typeof price === 'string') {
@@ -30,12 +32,14 @@ function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price
     
     let filesToLoad = modelFiles;
     
-    if (!filesToLoad || filesToLoad.length === 0) {
+    if (corsEnforcingWebsites.has(websiteName.toLowerCase())) {
       try {
-        const baseUrl = import.meta.env.VITE_API_BASE_URL + '/api/models/download';
+        console.log('Fetching files for 3D viewer using localHostedLinks');
+        const baseUrl = import.meta.env.VITE_API_BASE_URL + '/api/models/download/localhostedlinks';
         const params = new URLSearchParams({
           sourceName: websiteName,
-          id: id
+          id: id,
+          downloadPageUrl : websiteLink
         });
         
         const response = await fetch(`${baseUrl}?${params.toString()}`);
@@ -57,14 +61,15 @@ function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price
     
     setShowDetails(true); 
     
-    if (!modelFiles || modelFiles.length === 0) {
+    if (!modelFiles || modelFiles.length === 0 || modelFiles.every(file => !file.downloadUrl || !file.downloadUrl.startsWith('http'))) {
       setIsLoadingFiles(true);
       
       try {
         const baseUrl = import.meta.env.VITE_API_BASE_URL + '/api/models/download';
         const params = new URLSearchParams({
           sourceName: websiteName,
-          id: id
+          id: id,
+          downloadPageUrl: websiteLink
         });
         
         const response = await fetch(`${baseUrl}?${params.toString()}`);
