@@ -119,7 +119,7 @@ function ModelDetailsOverlay({ files, modelName, isLoading, onClose }) {
                     disabled={downloadingAll || !files.some(file => file.downloadUrl)}
                     className="download-all-btn"
                   >
-                    {downloadingAll ? 'Downloading...' : `Download All (${files.length} files)`}
+                    {downloadingAll ? 'Downloading...' : `Download All (${files.length} files) as Zip`}
                   </button>
                 </div>
 
