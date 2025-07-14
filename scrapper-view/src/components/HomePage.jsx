@@ -11,7 +11,7 @@ function HomePage() {
   const faqData = [
     {
       question: "What is the 3D Model Scrapper App?",
-      answer: "The 3D Model Scrapper App is a comprehensive tool that searches across multiple 3D model websites to find models related to your search terms. It aggregates results from popular platforms like Thingiverse, Thangs, MyMiniFactory, and Cults3D in one convenient location."
+      answer: "The 3D Model Scrapper App is a comprehensive tool that searches across multiple 3D model websites to find models related to your search terms. It aggregates results from popular platforms like Thingiverse, Printables, Thangs, MyMiniFactory, and Cults3D in one convenient location."
     },
     {
       question: "Which websites does the app scrape?",
@@ -19,7 +19,7 @@ function HomePage() {
     },
     {
       question: "Can I download models directly through the app?",
-      answer: "Currently direct downloads are supported only for Thingiverse, Printables and Cults3D."
+      answer: "Currently direct downloads are supported for Thingiverse, Printables and Cults3D."
     },
     {
       question: "How do I use the 3D viewer?",
