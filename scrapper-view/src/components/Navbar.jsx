@@ -10,7 +10,9 @@ function Navbar({ onSearch,setShowHomePage }) {
     'thangs', 
     'myminifactory', 
     'cults3d',
-    'sketchfab' 
+    'sketchfab',
+    'printables',
+    'grabcad' 
   ]);
   const [showFreeOnly, setShowFreeOnly] = useState(false);
 
