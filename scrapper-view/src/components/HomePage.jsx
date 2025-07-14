@@ -15,15 +15,15 @@ function HomePage() {
     },
     {
       question: "Which websites does the app scrape?",
-      answer: "Currently, the app scrapes models from Thingiverse, Thangs, MyMiniFactory,Cults3D,GrabCad and Sketchfab. You can filter your search to include or exclude specific websites based on your preferences."
+      answer: "Currently, the app scrapes models from Thingiverse, Printables, Thangs, MyMiniFactory, Cults3D, GrabCad and Sketchfab. You can filter your search to include or exclude specific websites based on your preferences."
     },
     {
       question: "Can I download models directly through the app?",
-      answer: "Currently direct downloads are supported only for Thingiverse"
+      answer: "Currently direct downloads are supported only for Thingiverse, Printables and Cults3D."
     },
     {
       question: "How do I use the 3D viewer?",
-      answer: "Click the '3D View' button on any model to open kirimoto's integrated viewer. If a direct download is available for the model, the viewer loads the files automatically, otherwise you will have to manually download the files and import them into the viewer."
+      answer: "Click the '3D View' button on any model to open kirimoto's integrated viewer. If a direct download is available for the model's stl files, the viewer loads the files automatically, otherwise you will have to manually download the files and import them into the viewer."
     }
   ];
 
