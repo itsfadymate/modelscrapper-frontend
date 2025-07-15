@@ -131,6 +131,7 @@ function ModelDetailsOverlay({ files, modelName, isLoading, onClose }) {
                         {file.size && (
                           <span className="file-size">({formatFileSize(file.size)})</span>
                         )}
+                        {file.volume && (<span className="file-volume">({file.volume})</span>)}
                       </div>
                       <button
                         onClick={() => handleDownloadFile(file)}

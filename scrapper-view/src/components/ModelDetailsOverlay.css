@@ -142,6 +142,11 @@
   color: #6c757d;
 }
 
+.file-volume {
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
 .download-btn {
   padding: 0.5rem;
   background: #9edc29;
