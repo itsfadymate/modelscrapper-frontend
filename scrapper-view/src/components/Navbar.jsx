@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './Navbar.css';
 import FilterOverlay from './FilterOverlay';
+import { Filter,Search } from 'lucide-react';
 
 function Navbar({ onSearch,setShowHomePage }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -58,13 +59,15 @@ function Navbar({ onSearch,setShowHomePage }) {
           className="filter-button"
         >
           Filter {(selectedWebsites.length > 0 || showFreeOnly) && `(${selectedWebsites.length} websites ${showFreeOnly ? ', Free Only' : ''})`}
+           <Filter style={{ verticalAlign: 'middle' }} size={14} />
         </button>
 
         <button 
           onClick={handleSearch}
           className="search-button"
         >
-          Search
+          Search 
+          <Search style={{ verticalAlign: 'middle' }} size={20} />
         </button>
       </div>
       {showFilter && (
