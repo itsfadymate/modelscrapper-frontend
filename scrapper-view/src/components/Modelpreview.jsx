@@ -11,7 +11,7 @@ function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price
   const [isLoadingFiles, setIsLoadingFiles] = useState(false); 
   const [isLoading3D, setIsLoading3D] = useState(false);
 
-  const corsEnforcingWebsites = new Set(['cults3d']);
+  const corsEnforcingWebsites = new Set(['cults3d','grabcad]']);
 
   const cleanPrice = (price) => {
     if (typeof price === 'number') return price;
@@ -60,8 +60,8 @@ function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price
     e.stopPropagation();
     
     setShowDetails(true); 
-    
-    if (!modelFiles || modelFiles.length === 0 || modelFiles.every(file => !file.downloadUrl || !file.downloadUrl.startsWith('http'))) {
+
+    if (isFree && (!modelFiles || modelFiles.length === 0 || modelFiles.every(file => !file.downloadUrl || !file.downloadUrl.startsWith('http')))) {
       setIsLoadingFiles(true);
       
       try {
