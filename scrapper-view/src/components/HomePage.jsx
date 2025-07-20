@@ -24,6 +24,14 @@ function HomePage() {
     {
       question: "How do I use the 3D viewer?",
       answer: "Click the '3D View' button on any model to open kirimoto's integrated viewer. If a direct download is available for the model's stl files, the viewer loads the files automatically, otherwise you will have to manually download the files and import them into the viewer."
+    },
+    {
+      question: "How does the optimized search work?",
+      answer: "The app uses a custom search engine that optimizes queries for each website."
+    },
+    {
+      question: "Can I use the app on mobile devices?",
+      answer: "Yes, the 3D Model Scrapper App is designed to be responsive and works on most mobile devices. However, for the best experience, it is recommended to use a tablet or desktop."
     }
   ];
 
