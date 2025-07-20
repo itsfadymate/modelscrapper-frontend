@@ -5,6 +5,7 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
   const [selectedWebsites, setSelectedWebsites] = useState(initialSelectedWebsites);
   const [showFreeOnly, setShowFreeOnly] = useState(initialShowFreeOnly);
 
+  const [optimizedSearchWebsites, setoptimizedSearchWebsites] = useState([]);
 
   const availableWebsites = [
     { id: 'thingiverse', },
@@ -24,9 +25,7 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
 
   const handleWebsiteToggle = (websiteId) => {
     setSelectedWebsites(prev => 
-      prev.includes(websiteId) 
-        ? prev.filter(id => id !== websiteId)
-        : [...prev, websiteId]
+      prev.includes(websiteId) ? prev.filter(id => id !== websiteId) : [...prev, websiteId]
     );
   };
 
@@ -38,13 +37,19 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
     }
   };
 
+  const handleOptimizedToggle = (websiteId) => {
+    setoptimizedSearchWebsites(
+      prev => prev.includes(websiteId) ? prev.filter(id => id !== websiteId) : [...prev, websiteId]
+    );
+  };
+
   const handleApplyFilter = () => {
-    onApply(selectedWebsites, showFreeOnly);
+    onApply(selectedWebsites, showFreeOnly, optimizedSearchWebsites);
   };
 
   const handleApplyAndSearch = () => {
     handleApplyFilter();
-    onSearch(searchQuery, selectedWebsites, showFreeOnly);
+    onSearch(searchQuery, selectedWebsites, showFreeOnly, optimizedSearchWebsites);
   };
 
   return (
@@ -74,7 +79,7 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
           
           <div className="website-list">
             {availableWebsites.map(website => (
-              <div key={website.id} className="website-item">
+              <div key={website.id} className="website-item improved-website-item">
                 <label className="website-label">
                   <input
                     type="checkbox"
@@ -84,6 +89,17 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
                   />
                   <span className="website-name">{website.id}</span>
                 </label>
+                <div className="optimized-container">
+                  <span className="optimized-label">Optimized search</span>
+                  <label className="optimized-switch small-switch">
+                    <input
+                      type="checkbox"
+                      checked={optimizedSearchWebsites.includes(website.id)}
+                      onChange={() => handleOptimizedToggle(website.id)}
+                    />
+                    <span className="slider"></span>
+                  </label>
+                </div>
               </div>
             ))}
           </div>
