@@ -13,7 +13,7 @@ function App() {
   const resultsPerPage = 20;
   const slowWebsites = [];
 
-  const handleSearch = async (query, selectedWebsites = [], showFreeOnly = false) => {
+  const handleSearch = async (query, selectedWebsites = [], showFreeOnly = false, optimizedSearchWebsites = []) => {
     for (let website of selectedWebsites){
       if (slowWebsites.includes(website)){
         setIsScrapingSlowWebsite(true);
@@ -38,7 +38,11 @@ function App() {
       if (showFreeOnly) {
         params.append('showFreeOnly', 'true');
       }
-      
+
+      if (optimizedSearchWebsites.length > 0) {
+        params.append('sourcesToGoogle', optimizedSearchWebsites.join(','));
+      }
+
       const apiUrl = `${baseUrl}?${params.toString()}`;
       console.log('API URL:', apiUrl);
       

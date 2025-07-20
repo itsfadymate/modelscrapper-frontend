@@ -15,15 +15,17 @@ function Navbar({ onSearch,setShowHomePage }) {
     'printables',
     'grabcad' 
   ]);
+  const [searchUsingGoogle, setSearchUsingGoogle] = useState([]);
   const [showFreeOnly, setShowFreeOnly] = useState(false);
 
   const handleSearch = () => {
     console.log('Searching for:', searchQuery);
     console.log('Selected websites:', selectedWebsites);
     console.log('Show free only:', showFreeOnly);
+    console.log('websites to search using google:', searchUsingGoogle);
     
     if (onSearch && searchQuery.trim()) {
-      onSearch(searchQuery.trim(), selectedWebsites, showFreeOnly);
+      onSearch(searchQuery.trim(), selectedWebsites, showFreeOnly, searchUsingGoogle);
     }
   };
 
@@ -33,9 +35,10 @@ function Navbar({ onSearch,setShowHomePage }) {
     }
   };
 
-  const handleApplyFilter = (websites, freeOnly) => {
+  const handleApplyFilter = (websites, freeOnly, searchUsingGoogle) => {
     setSelectedWebsites(websites);
     setShowFreeOnly(freeOnly);
+    setSearchUsingGoogle(searchUsingGoogle);
     setShowFilter(false);
   };
 
