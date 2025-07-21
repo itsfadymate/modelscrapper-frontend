@@ -19,7 +19,7 @@ function HomePage() {
     },
     {
       question: "Can I download models directly through the app?",
-      answer: "Currently direct downloads are supported for Thingiverse, Printables and Cults3D."
+      answer: "Only Free Models. Currently direct downloads are supported for Thingiverse, Printables, Cults3D, and MyMiniFactory."
     },
     {
       question: "How do I use the 3D viewer?",
