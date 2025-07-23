@@ -18,16 +18,25 @@ function HomePage() {
       answer: "Currently, the app scrapes models from Thingiverse, Printables, Thangs, MyMiniFactory, Cults3D, GrabCad and Sketchfab. You can filter your search to include or exclude specific websites based on your preferences."
     },
     {
+      question: "How does the optimized search work?",
+      answer: "The app uses a custom search engine that optimizes queries for each website."
+    },
+    {
+      question: "What do I need to know about optimized search?",
+      answer: "It is more likely to fetch relevant results than the normal search. However for the following websites:\n"+
+      " - GrabCad\n"+
+      " - Printables\n"+
+      " - Thangs\n"+
+      "It significantly cuts down search time, however it leaves out data about likes, comments, make count and wether the model is featured or not. \n"+
+      "For the other websites search time is slower but all data is fetched as traditional search." 
+    },
+    {
       question: "Can I download models directly through the app?",
       answer: "Only Free Models. Currently direct downloads are supported for Thingiverse, Printables, Cults3D, and MyMiniFactory."
     },
     {
       question: "How do I use the 3D viewer?",
-      answer: "Click the '3D View' button on any model to open kirimoto's integrated viewer. If a direct download is available for the model's stl files, the viewer loads the files automatically, otherwise you will have to manually download the files and import them into the viewer."
-    },
-    {
-      question: "How does the optimized search work?",
-      answer: "The app uses a custom search engine that optimizes queries for each website."
+      answer: "Click the '3D View' button on any model to open kirimoto's integrated slicer. If a direct download is available for the model's stl files, the viewer loads the files automatically, otherwise you will have to manually download the files and import them into the viewer."
     },
     {
       question: "Can I use the app on mobile devices?",
@@ -89,7 +98,14 @@ function HomePage() {
                 
                 {openFaqIndex === index && (
                   <div className="faq-answer">
-                    <p>{faq.answer}</p>
+                    <p>
+                      {faq.answer.split('\n').map((line, i) => (
+                        <span key={i}>
+                          {line}
+                          <br />
+                        </span>
+                      ))}
+                    </p>
                   </div>
                 )}
               </div>
