@@ -1,11 +1,16 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import './HomePage.css';
 
 function HomePage() {
   const [openFaqIndex, setOpenFaqIndex] = useState(null);
+  const faqRef = useRef(null);
 
   const toggleFaq = (index) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
+  };
+
+  const scrollToFaq = () => {
+    faqRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const faqData = [
@@ -46,6 +51,10 @@ function HomePage() {
 
   return (
     <div className="homepage">
+      <button className="faq-scroll-btn" onClick={scrollToFaq}>
+        FAQ
+      </button>
+
       <div className="welcome-section">
         <div className="welcome-content">
           <h1 className="welcome-title">
@@ -78,8 +87,7 @@ function HomePage() {
         </div>
       </div>
 
-    
-      <div className="faq-section">
+      <div className="faq-section" ref={faqRef}>
         <div className="faq-content">
           <h2 className="faq-title">FAQ</h2>
           
