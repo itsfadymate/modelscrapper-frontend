@@ -4,7 +4,23 @@ import './Modelpreview.css';
 import ModelDetailsOverlay from './ModelDetailsOverlay';
 import Kiri3DOverlay from './Kiri3DOverlay';
 
-function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price, makes, files = [], likeCount = 0, commentCount = 0, isAwardWinning = false }) {
+function Modelpreview({result}) {
+
+  const {
+    id,
+    imageLink,
+    modelName,
+    websiteName,
+    websiteLink,
+    price,
+    makesCount,
+    files,
+    likesCount,
+    commentsCount,
+    featured,
+    embeddedViewerUrl
+  } = result;
+
   const [showDetails, setShowDetails] = useState(false);
   const [show3DViewer, setShow3DViewer] = useState(false);
   const [modelFiles, setModelFiles] = useState(files); 
@@ -101,23 +117,23 @@ function Modelpreview({id, imageLink, modelName, websiteName, websiteLink, price
                 FREE
               </div>
             )}
-            {isAwardWinning && (
+            {featured && (
               <div className="award-tag">
                 🏆 Featured
               </div>
             )}
             <div className="makes-count">
-                {makes} makes
+                {makesCount} makes
             </div>
             
             <div className="stats-badges">
               <div className="stat-badge like-badge">
                 <Heart className="stat-icon" size={17} />
-                <div className="stat-count">{likeCount}</div>
+                <div className="stat-count">{likesCount}</div>
               </div>
               <div className="stat-badge comment-badge">
                 <MessageCircle className="stat-icon" size={17} />
-                <div className="stat-count">{commentCount}</div>
+                <div className="stat-count">{commentsCount}</div>
               </div>
             </div>
           </div>

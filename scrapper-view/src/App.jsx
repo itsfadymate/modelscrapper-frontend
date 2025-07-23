@@ -51,7 +51,7 @@ function App() {
         .catch(() => []);
 
      
-
+      //console.log('Search results:', results);
       setSearchResults(results);
     } catch (error) {
       console.error('Search error:', error);
@@ -100,17 +100,7 @@ function App() {
                 <Modelpreview
                 
                   key={startIndex + index}
-                  id={result.id}
-                  imageLink={result.imageLink}
-                  modelName={result.modelName}
-                  websiteName={result.websiteName}
-                  websiteLink={result.websiteLink}
-                  price={result.price}
-                  makes={result.makesCount}
-                  files={result.files}
-                  likeCount={result.likesCount}
-                  commentCount={result.commentsCount}
-                  isAwardWinning={result.featured} 
+                  result={result}
                 />
               ))}
             </div>
