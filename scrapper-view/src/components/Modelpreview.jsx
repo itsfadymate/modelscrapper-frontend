@@ -47,7 +47,6 @@ function Modelpreview({result}) {
   const handleView3D = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-
     
     setIsLoading3D(true);
     let filesToLoad = modelFiles;
