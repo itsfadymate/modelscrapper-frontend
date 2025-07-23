@@ -33,7 +33,8 @@ function HomePage() {
       " - Printables\n"+
       " - Thangs\n"+
       "It significantly cuts down search time, however it leaves out data about likes, comments, make count and wether the model is featured or not. \n"+
-      "For the other websites search time is slower but all data is fetched as traditional search." 
+      "For the other websites search time is slower but all data is fetched as traditional search.\n\n"+
+      "N.B.: If the optimized search failed this means the API quota for the day has been reached, you can try again tomorrow or use the normal search." 
     },
     {
       question: "Can I download models directly through the app?",
@@ -41,7 +42,9 @@ function HomePage() {
     },
     {
       question: "How do I use the 3D viewer?",
-      answer: "Click the '3D View' button on any model to open kirimoto's integrated slicer. If a direct download is available for the model's stl files, the viewer loads the files automatically, otherwise you will have to manually download the files and import them into the viewer."
+      answer: "Click the '3D View' button on any model.\n"+
+      "For websites for which direct download is implemented, kirimoto slicer is opened and loads the files directly.\n"+
+      "For other websites, if a 3D view option is available it is loaded."
     },
     {
       question: "Can I use the app on mobile devices?",
