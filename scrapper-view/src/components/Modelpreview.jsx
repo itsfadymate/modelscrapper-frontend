@@ -3,6 +3,7 @@ import { Heart, MessageCircle, Eye, Box } from 'lucide-react';
 import './Modelpreview.css';
 import ModelDetailsOverlay from './ModelDetailsOverlay';
 import Kiri3DOverlay from './Kiri3DOverlay';
+import EmbededViewer from './EmbededViewer';
 
 function Modelpreview({result}) {
 
@@ -28,6 +29,9 @@ function Modelpreview({result}) {
   const [isLoading3D, setIsLoading3D] = useState(false);
 
   const corsEnforcingWebsites = new Set(['cults3d','grabcad]']);
+  const noDirectDownloadWebsites = new Set(['grabcad', 'sketchfab','thangs']);
+  const no3DViewerWebsites = new Set(['grabcad', 'thangs']);
+  
 
   const cleanPrice = (price) => {
     if (typeof price === 'number') return price;
@@ -43,12 +47,12 @@ function Modelpreview({result}) {
   const handleView3D = async (e) => {
     e.preventDefault();
     e.stopPropagation();
+
     
     setIsLoading3D(true);
-    
     let filesToLoad = modelFiles;
     
-    if (corsEnforcingWebsites.has(websiteName.toLowerCase())) {
+    if (!noDirectDownloadWebsites.has(websiteName) && corsEnforcingWebsites.has(websiteName.toLowerCase())) {
       try {
         console.log('Fetching files for 3D viewer using localHostedLinks');
         const baseUrl = import.meta.env.VITE_API_BASE_URL + '/api/models/download/localhostedlinks';
@@ -157,10 +161,10 @@ function Modelpreview({result}) {
           <button 
             className="view-3d-btn"
             onClick={handleView3D}
-            disabled={isLoading3D}
+            disabled={isLoading3D || no3DViewerWebsites.has(websiteName.toLowerCase())}
           >
             <Box size={16} />
-            {isLoading3D ? 'Loading...' : '3D View'}
+            {noDirectDownloadWebsites.has(websiteName.toLowerCase()) ? '3D view' : isLoading3D ? 'Loading...' : 'View in slicer'}
           </button>
         </div>
       </div>
@@ -174,9 +178,17 @@ function Modelpreview({result}) {
         />
       )}
 
-      {show3DViewer && (
+      {show3DViewer && !noDirectDownloadWebsites.has(websiteName.toLowerCase()) && (
         <Kiri3DOverlay
           files={modelFiles}
+          modelName={modelName}
+          onClose={() => setShow3DViewer(false)}
+        />
+      )}
+
+      {show3DViewer && embeddedViewerUrl && noDirectDownloadWebsites.has(websiteName.toLowerCase()) && (
+        <EmbededViewer
+          url={embeddedViewerUrl}
           modelName={modelName}
           onClose={() => setShow3DViewer(false)}
         />
