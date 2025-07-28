@@ -85,10 +85,24 @@ function HomePage() {
               <ol>
                 <li>Enter your search term in the search bar above</li>
                 <li>Use the filter button to customize your search preferences</li>
-                <li>Browse results and click on models to view details</li>
                 <li>Click on a model to visit it's product page</li>
                 <li>Download files or use the 3D viewer to explore models</li>
                 
+              </ol>
+            </div>
+
+            <div className="getting-started">
+              <h3>Features:</h3>
+              <ol>
+                <li><strong>Unified Search:</strong> Search for 3D models across the major 3D printing websites at once.</li>
+                <li><strong>Filtering:</strong> Filter results by website and free/paid models.</li>
+                <li><strong>Sorting:</strong> Sort the results according to likes, make count, and other criteria.</li>
+                <li><strong>Search Engine:</strong> Choose the default website's search engine or a custom Google search engine.</li>
+                <li><strong>Model Details:</strong> View model information, including images, price, makes, likes, comments, and featured status.</li>
+                <li><strong>Direct Download:</strong> Download model files directly (where supported).</li>
+                <li><strong>Volume calculation:</strong> Check out the calculated volume of STL files.</li>
+                <li><strong>3D Viewer:</strong> Preview models in the browser using an integrated 3D viewer or embedded viewer (where available).</li>
+                <li><strong>Responsive Design:</strong> Works on desktop and mobile devices.</li>
               </ol>
             </div>
           </div>
