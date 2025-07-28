@@ -33,6 +33,21 @@ function App() {
         return 8;
     }
   };
+  const sortResults = (results, sortOption) => {
+    switch (sortOption) {
+        case 'likes':
+          results.sort((a, b) => (b.likesCount === a.likesCount? getRank(a) - getRank(b) : (b.likesCount || 0) - (a.likesCount || 0)));
+          break;
+        case 'featured':
+          results.sort((a, b) => (b.featured === a.featured ? getRank(a) - getRank(b) : a.featured ? -1 : 1));
+          break;
+        case 'make count':
+          results.sort((a, b) => (b.makesCount === a.makesCount ? getRank(a) - getRank(b) : (b.makesCount || 0) - (a.makesCount || 0)));
+          break;
+        default:
+          results.sort((a, b) => getRank(a) - getRank(b));
+      }
+    }
 
   const handleSearch = async (query, selectedWebsites = [], showFreeOnly = false, optimizedSearchWebsites = [], sortOption = 'default') => {
     for (let website of selectedWebsites){
@@ -70,19 +85,7 @@ function App() {
       const results = await fetch(apiUrl)
         .then(response => response.json())
         .catch(() => []);
-      switch (sortOption) {
-        case 'likes':
-          results.sort((a, b) => (b.likesCount === a.likesCount? getRank(a) - getRank(b) : (b.likesCount || 0) - (a.likesCount || 0)));
-          break;
-        case 'featured':
-          results.sort((a, b) => (b.featured === a.featured ? getRank(a) - getRank(b) : a.featured ? -1 : 1));
-          break;
-        case 'makecount':
-          results.sort((a, b) => (b.makesCount === a.makesCount ? getRank(a) - getRank(b) : (b.makesCount || 0) - (a.makesCount || 0)));
-          break;
-        default:
-          results.sort((a, b) => getRank(a) - getRank(b));
-      }
+      sortResults(results, sortOption);
       console.log('Sorted Search results:', results);
       setSearchResults(results);
     } catch (error) {

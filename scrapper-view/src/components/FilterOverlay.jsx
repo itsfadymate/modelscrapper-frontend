@@ -116,7 +116,7 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
           >
             <option value="default">Default</option>
             <option value="likes">Like Count</option>
-            <option value="makecount">Make Count</option>
+            <option value="make count">Make Count</option>
             <option value="featured">Featured First</option>
           </select>
         </div>
