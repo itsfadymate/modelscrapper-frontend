@@ -34,7 +34,7 @@ function App() {
     }
   };
 
-  const handleSearch = async (query, selectedWebsites = [], showFreeOnly = false, optimizedSearchWebsites = []) => {
+  const handleSearch = async (query, selectedWebsites = [], showFreeOnly = false, optimizedSearchWebsites = [], sortOption = 'default') => {
     for (let website of selectedWebsites){
       if (slowWebsites.includes(website)){
         setIsScrapingSlowWebsite(true);
@@ -70,8 +70,19 @@ function App() {
       const results = await fetch(apiUrl)
         .then(response => response.json())
         .catch(() => []);
-      results.sort((a, b) => getRank(a) - getRank(b));
-     
+      switch (sortOption) {
+        case 'likes':
+          results.sort((a, b) => (b.likesCount === a.likesCount? getRank(a) - getRank(b) : (b.likesCount || 0) - (a.likesCount || 0)));
+          break;
+        case 'featured':
+          results.sort((a, b) => (b.featured === a.featured ? getRank(a) - getRank(b) : b.featured ? -1 : 1));
+          break;
+        case 'makecount':
+          results.sort((a, b) => (b.makesCount === a.makesCount ? getRank(a) - getRank(b) : (b.makesCount || 0) - (a.makesCount || 0)));
+          break;
+        default:
+          results.sort((a, b) => getRank(a) - getRank(b));
+      }
       console.log('Sorted Search results:', results);
       setSearchResults(results);
     } catch (error) {

@@ -4,6 +4,7 @@ import './FilterOverlay.css';
 function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedWebsites = [], initialShowFreeOnly = false }) {
   const [selectedWebsites, setSelectedWebsites] = useState(initialSelectedWebsites);
   const [showFreeOnly, setShowFreeOnly] = useState(initialShowFreeOnly);
+  const [sortOption, setSortOption] = useState('default');
 
   const [optimizedSearchWebsites, setoptimizedSearchWebsites] = useState([]);
 
@@ -44,12 +45,12 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
   };
 
   const handleApplyFilter = () => {
-    onApply(selectedWebsites, showFreeOnly, optimizedSearchWebsites);
+    onApply(selectedWebsites, showFreeOnly, optimizedSearchWebsites, sortOption);
   };
 
   const handleApplyAndSearch = () => {
     handleApplyFilter();
-    onSearch(searchQuery, selectedWebsites, showFreeOnly, optimizedSearchWebsites);
+    onSearch(searchQuery, selectedWebsites, showFreeOnly, optimizedSearchWebsites, sortOption);
   };
 
   return (
@@ -103,6 +104,21 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
               </div>
             ))}
           </div>
+        </div>
+
+        <div className="filter-section">
+          <label htmlFor="sort-select">Sort By:</label>
+          <select
+            id="sort-select"
+            value={sortOption}
+            onChange={e => setSortOption(e.target.value)}
+            className="sort-select"
+          >
+            <option value="default">Default</option>
+            <option value="likes">Like Count</option>
+            <option value="makecount">Make Count</option>
+            <option value="featured">Featured First</option>
+          </select>
         </div>
 
         <div className="filter-actions">

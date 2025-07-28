@@ -6,6 +6,7 @@ import { Filter,Search } from 'lucide-react';
 function Navbar({ onSearch,setShowHomePage }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilter, setShowFilter] = useState(false);
+  const [sortOption, setSortOption] = useState('default');
   const [selectedWebsites, setSelectedWebsites] = useState([
     'thingiverse', 
     'thangs', 
@@ -23,9 +24,10 @@ function Navbar({ onSearch,setShowHomePage }) {
     console.log('Selected websites:', selectedWebsites);
     console.log('Show free only:', showFreeOnly);
     console.log('websites to search using google:', searchUsingGoogle);
+    console.log('Sort option:', sortOption);
     
     if (onSearch && searchQuery.trim()) {
-      onSearch(searchQuery.trim(), selectedWebsites, showFreeOnly, searchUsingGoogle);
+      onSearch(searchQuery.trim(), selectedWebsites, showFreeOnly, searchUsingGoogle, sortOption);
     }
   };
 
@@ -35,10 +37,11 @@ function Navbar({ onSearch,setShowHomePage }) {
     }
   };
 
-  const handleApplyFilter = (websites, freeOnly, searchUsingGoogle) => {
+  const handleApplyFilter = (websites, freeOnly, searchUsingGoogle, sortOption) => {
     setSelectedWebsites(websites);
     setShowFreeOnly(freeOnly);
     setSearchUsingGoogle(searchUsingGoogle);
+    setSortOption(sortOption);
     setShowFilter(false);
   };
 
