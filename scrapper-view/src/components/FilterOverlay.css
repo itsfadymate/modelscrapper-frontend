@@ -189,6 +189,24 @@
   font-weight: 500;
 }
 
+.sort-select {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #9edc29;
+  background: #f8f9fa;
+  color: #275559;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-left: 0.5rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.sort-select:focus {
+  outline: none;
+  border-color: #275559;
+  box-shadow: 0 0 0 2px #9edc2933;
+}
+
 /* Mobile responsive */
 @media (max-width: 768px) {
   .filter-overlay {
