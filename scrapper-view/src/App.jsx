@@ -13,6 +13,27 @@ function App() {
   const resultsPerPage = 20;
   const slowWebsites = [];
 
+  const getRank = (result) => {
+    switch (result.websiteName.toLowerCase()) {
+      case 'thingiverse':
+        return 1;
+      case 'myminifactory':
+        return 2;
+      case 'printables':
+        return 3;
+      case 'cults3d':
+        return 4;
+      case 'sketchfab':
+        return 5;
+      case 'grabcad':
+        return 6;
+      case 'thangs':
+        return 7;
+      default:
+        return 8;
+    }
+  };
+
   const handleSearch = async (query, selectedWebsites = [], showFreeOnly = false, optimizedSearchWebsites = []) => {
     for (let website of selectedWebsites){
       if (slowWebsites.includes(website)){
@@ -49,9 +70,9 @@ function App() {
       const results = await fetch(apiUrl)
         .then(response => response.json())
         .catch(() => []);
-
+      results.sort((a, b) => getRank(a) - getRank(b));
      
-      //console.log('Search results:', results);
+      console.log('Sorted Search results:', results);
       setSearchResults(results);
     } catch (error) {
       console.error('Search error:', error);
