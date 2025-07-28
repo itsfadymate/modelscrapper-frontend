@@ -43,8 +43,13 @@ function HomePage() {
     {
       question: "How do I use the 3D viewer?",
       answer: "Click the '3D View' button on any model.\n"+
-      "For websites for which direct download is implemented, kirimoto slicer is opened and loads the files directly.\n"+
+      "For websites for which direct download is implemented, kirimoto slicer is opened and loads the STL files directly if they exist.\n"+
       "For other websites, if a 3D view option is available it is loaded."
+    },
+    {
+      question: "Why are some buttons disabled?",
+      answer: "The '3D View' button is disabled for websites that do not support direct downloads or do not have a 3D viewer available. This is to ensure that you only attempt to view models in a compatible format.\n"+
+      "The view details button is disabled for websites for which detail fetching is not implemented."
     },
     {
       question: "Can I use the app on mobile devices?",
