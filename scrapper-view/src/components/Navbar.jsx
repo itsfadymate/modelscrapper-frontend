@@ -64,7 +64,7 @@ function Navbar({ onSearch,setShowHomePage }) {
           onClick={() => setShowFilter(!showFilter)}
           className="filter-button"
         >
-          Filter {(selectedWebsites.length > 0 || showFreeOnly) && `(${selectedWebsites.length} websites ${showFreeOnly ? ', Free Only' : ''})`}
+          Filter {(selectedWebsites.length > 0) && `(${selectedWebsites.length} websites sorted by ${sortOption} ${showFreeOnly ? ', Free Only' : ''})`}
            <Filter style={{ verticalAlign: 'middle' }} size={14} />
         </button>
 
