@@ -75,7 +75,7 @@ function App() {
           results.sort((a, b) => (b.likesCount === a.likesCount? getRank(a) - getRank(b) : (b.likesCount || 0) - (a.likesCount || 0)));
           break;
         case 'featured':
-          results.sort((a, b) => (b.featured === a.featured ? getRank(a) - getRank(b) : b.featured ? -1 : 1));
+          results.sort((a, b) => (b.featured === a.featured ? getRank(a) - getRank(b) : a.featured ? -1 : 1));
           break;
         case 'makecount':
           results.sort((a, b) => (b.makesCount === a.makesCount ? getRank(a) - getRank(b) : (b.makesCount || 0) - (a.makesCount || 0)));
