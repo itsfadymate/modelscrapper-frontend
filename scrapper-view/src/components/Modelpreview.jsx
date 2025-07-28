@@ -28,7 +28,7 @@ function Modelpreview({result}) {
   const [isLoadingFiles, setIsLoadingFiles] = useState(false); 
   const [isLoading3D, setIsLoading3D] = useState(false);
 
-  const corsEnforcingWebsites = new Set(['cults3d','grabcad]']);
+  const corsEnforcingWebsites = new Set(['cults3d','grabcad','myminifactory']);
   const noDirectDownloadWebsites = new Set(['grabcad', 'sketchfab','thangs']);
   const no3DViewerWebsites = new Set(['grabcad', 'thangs']);
   
