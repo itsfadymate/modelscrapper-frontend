@@ -57,7 +57,8 @@ VITE_KIRI_MOTO_URL=https://grid.space/kiri/
 
 
 ### Example Details Overlay
-<img width="604" height="693" alt="image" src="https://github.com/user-attachments/assets/a7a7ec6d-3502-49ff-b5e7-9d85fc1d59b6" />
+<img width="1893" height="902" alt="image" src="https://github.com/user-attachments/assets/76ac363c-f03f-41b4-a36b-284685a8d702" />
+
 
 ### Example integrated slicer
 <img width="1867" height="887" alt="image" src="https://github.com/user-attachments/assets/c38b4ada-0e43-41e8-a79a-b5b552232083" />
