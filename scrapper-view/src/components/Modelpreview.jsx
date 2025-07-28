@@ -152,6 +152,7 @@ function Modelpreview({result}) {
           <button 
             className="view-details-btn"
             onClick={handleViewDetails}
+            disabled={noDirectDownloadWebsites.has(websiteName.toLowerCase())}
           >
             <Eye size={16} />
               Details
