@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Info } from 'lucide-react';
 import './FilterOverlay.css';
 
 function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedWebsites = [], initialShowFreeOnly = false }) {
@@ -53,6 +54,21 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
     onSearch(searchQuery, selectedWebsites, showFreeOnly, optimizedSearchWebsites, sortOption);
   };
 
+  const getWebsiteInfo = (name) => {
+    const fasterSearch = 'Optimized search speeds up search time but fetches less data about a model.';
+    const slowerSearch = 'Optimized search slows down search time but improves results.';
+    switch (name) {
+      case 'thingiverse': return slowerSearch;
+      case 'printables': return fasterSearch;
+      case 'sketchfab': return slowerSearch;
+      case 'myminifactory': return slowerSearch;
+      case 'cults3d': return slowerSearch;
+      case 'thangs': return fasterSearch;
+      case 'grabcad': return fasterSearch;
+      default: return '';
+    }
+  };
+
   return (
     <div className="filter-overlay-backdrop" onClick={handleBackDropClick}>
       <div className="filter-overlay">
@@ -82,13 +98,21 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
             {availableWebsites.map(website => (
               <div key={website.id} className="website-item improved-website-item">
                 <label className="website-label">
-                  <input
-                    type="checkbox"
-                    checked={selectedWebsites.includes(website.id)}
-                    onChange={() => handleWebsiteToggle(website.id)}
-                    className="website-checkbox"
-                  />
-                  <span className="website-name">{website.id}</span>
+                  <span>
+                    <input
+                      type="checkbox"
+                      checked={selectedWebsites.includes(website.id)}
+                      onChange={() => handleWebsiteToggle(website.id)}
+                      className="website-checkbox"
+                    />
+                    <span className="website-name">{website.id}</span>
+                  </span>
+                  <span className="website-info-icon">
+                    <Info size={16} />
+                    <span className="website-tooltip">
+                      {getWebsiteInfo(website.id)}
+                    </span>
+                  </span>
                 </label>
                 <div className="optimized-container">
                   <span className="optimized-label">Optimized search</span>
