@@ -91,10 +91,51 @@
 
 .website-label {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 0.75rem;
+  width: 100%;
+  position: relative;
+  padding-right: 32px; 
+}
+
+.website-info-icon {
+  position: relative;
+  margin-left: 8px;
   cursor: pointer;
-  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  color: #9edc29; 
+  transition: color 0.2s;
+}
+
+.website-info-icon:hover,
+.website-info-icon:focus {
+  color: #4caf50; 
+}
+
+.website-tooltip {
+  display: none;
+  position: absolute;
+  top: 120%;
+  right: 0;
+  left: auto;
+  background: #275559;
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 16px rgba(39, 85, 89, 0.18);
+  overflow-wrap: break-word;
+  text-align: left; 
+  max-width: 320px;
+  z-index: 100;
+  font-size: 1em;
+  line-height: 1.5;
+  border: 1.5px solid #9edc29; 
+}
+
+.website-info-icon:hover .website-tooltip,
+.website-info-icon:focus .website-tooltip {
+  display: block;
 }
 
 .website-checkbox {
@@ -222,5 +263,12 @@
   
   .apply-btn, .close-btn {
     width: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .website-tooltip {
+    max-width: 90vw;
+    font-size: 0.92em;
   }
 }
