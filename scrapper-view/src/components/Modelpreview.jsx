@@ -5,7 +5,7 @@ import ModelDetailsOverlay from './ModelDetailsOverlay';
 import Kiri3DOverlay from './Kiri3DOverlay';
 import EmbededViewer from './EmbededViewer';
 
-function Modelpreview({result}) {
+function Modelpreview({ result }) {
 
   const {
     id,
@@ -15,6 +15,8 @@ function Modelpreview({result}) {
     websiteLink,
     price,
     makesCount,
+    description,
+    license,
     files,
     likesCount,
     commentsCount,
@@ -24,33 +26,34 @@ function Modelpreview({result}) {
 
   const [showDetails, setShowDetails] = useState(false);
   const [show3DViewer, setShow3DViewer] = useState(false);
-  const [modelFiles, setModelFiles] = useState(files); 
-  const [isLoadingFiles, setIsLoadingFiles] = useState(false); 
+  const [modelDetails, setModelDetails] = useState({ license, description, files });
+  const [kiriMotoFiles, setKiriMotoFiles] = useState(files);
+  const [isLoadingDetails, setIsLoadingDetails] = useState(false);
   const [isLoading3D, setIsLoading3D] = useState(false);
 
-  const corsEnforcingWebsites = new Set(['cults3d','grabcad','myminifactory']);
-  const noDirectDownloadWebsites = new Set(['grabcad', 'sketchfab','thangs']);
+  const corsEnforcingWebsites = new Set(['cults3d', 'grabcad', 'myminifactory']);
+  const noDirectDownloadWebsites = new Set(['grabcad', 'sketchfab', 'thangs']);
   const no3DViewerWebsites = new Set(['grabcad', 'thangs']);
-  
+
 
   const cleanPrice = (price) => {
     if (typeof price === 'number') return price;
     if (typeof price === 'string') {
-      if (price==='paid' || price === 'could be paid') return 1;
+      if (price === 'paid' || price === 'could be paid') return 1;
       return parseFloat(price.replace(/[€$£¥¢₹\s,]/g, ''));
     }
     return 0;
   };
-   const parsedPrice = cleanPrice(price);
+  const parsedPrice = cleanPrice(price);
   const isFree = !parsedPrice || parsedPrice === 0;
-  
+
   const handleView3D = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     setIsLoading3D(true);
-    let filesToLoad = modelFiles;
-    
+    let filesToLoad = kiriMotoFiles;
+
     if (!noDirectDownloadWebsites.has(websiteName) && corsEnforcingWebsites.has(websiteName.toLowerCase())) {
       try {
         console.log('Fetching files for 3D viewer using localHostedLinks');
@@ -58,18 +61,39 @@ function Modelpreview({result}) {
         const params = new URLSearchParams({
           sourceName: websiteName,
           id: id,
-          downloadPageUrl : websiteLink
+          downloadPageUrl: websiteLink
         });
-        
+
         const response = await fetch(`${baseUrl}?${params.toString()}`);
         filesToLoad = await response.json();
-        setModelFiles(filesToLoad);
+        setKiriMotoFiles(filesToLoad);
+      } catch (error) {
+        console.error('Error fetching files:', error);
+        filesToLoad = [];
+      }  
+    //fetch the already fetched files if available
+    }else if(!noDirectDownloadWebsites.has(websiteName) && modelDetails.files && modelDetails.files.some(file => file.downloadUrl && file.downloadUrl.startsWith('http'))) {
+      console.log('Using already fetched files for 3D viewer');
+      setKiriMotoFiles(modelDetails.files);
+    } else if (!noDirectDownloadWebsites.has(websiteName) && (!kiriMotoFiles || kiriMotoFiles.length === 0)) {
+      try {
+        console.log('Fetching files for 3D viewer using downloadPageUrl');
+        const baseUrl = import.meta.env.VITE_API_BASE_URL + '/api/models/download';
+        const params = new URLSearchParams({
+          sourceName: websiteName,
+          id: id,
+          downloadPageUrl: websiteLink
+        });
+
+        const response = await fetch(`${baseUrl}?${params.toString()}`);
+        filesToLoad = await response.json();
+        setKiriMotoFiles(filesToLoad);
       } catch (error) {
         console.error('Error fetching files:', error);
         filesToLoad = [];
       }
     }
-    
+
     setIsLoading3D(false);
     setShow3DViewer(true);
   };
@@ -77,31 +101,30 @@ function Modelpreview({result}) {
   const handleViewDetails = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
-    setShowDetails(true); 
 
-    if (isFree && (!modelFiles || modelFiles.length === 0 || modelFiles.every(file => !file.downloadUrl || !file.downloadUrl.startsWith('http')))) {
-      setIsLoadingFiles(true);
-      
-      try {
-        const baseUrl = import.meta.env.VITE_API_BASE_URL + '/api/models/download';
-        const params = new URLSearchParams({
-          sourceName: websiteName,
-          id: id,
-          downloadPageUrl: websiteLink
-        });
-        
-        const response = await fetch(`${baseUrl}?${params.toString()}`);
-        const fetchedFiles = await response.json();
-        
-        setModelFiles(fetchedFiles);
-      } catch (error) {
-        console.error('Error fetching files:', error);
-        setModelFiles([]);
-      } finally {
-        setIsLoadingFiles(false);
-      }
+    setShowDetails(true);
+
+    setIsLoadingDetails(true);
+
+    try {
+      const baseUrl = import.meta.env.VITE_API_BASE_URL + '/api/models/details';
+      const params = new URLSearchParams({
+        sourceName: websiteName,
+        id: id,
+        downloadPageUrl: websiteLink
+      });
+
+      const response = await fetch(`${baseUrl}?${params.toString()}`);
+      const fetchedDetails = await response.json();
+
+      setModelDetails(fetchedDetails);
+    } catch (error) {
+      console.error('Error fetching files:', error);
+      setKiriMotoFiles([]);
+    } finally {
+      setIsLoadingDetails(false);
     }
+
   };
 
   return (
@@ -126,9 +149,9 @@ function Modelpreview({result}) {
               </div>
             )}
             <div className="makes-count">
-                {makesCount} makes
+              {makesCount} makes
             </div>
-            
+
             <div className="stats-badges">
               <div className="stat-badge like-badge">
                 <Heart className="stat-icon" size={17} />
@@ -147,18 +170,18 @@ function Modelpreview({result}) {
             </div>
           </div>
         </a>
-        
+
         <div className="model-actions">
-          <button 
+          <button
             className="view-details-btn"
             onClick={handleViewDetails}
             disabled={noDirectDownloadWebsites.has(websiteName.toLowerCase())}
           >
             <Eye size={16} />
-              Details
+            Details
           </button>
-          
-          <button 
+
+          <button
             className="view-3d-btn"
             onClick={handleView3D}
             disabled={isLoading3D || no3DViewerWebsites.has(websiteName.toLowerCase())}
@@ -171,16 +194,18 @@ function Modelpreview({result}) {
 
       {showDetails && (
         <ModelDetailsOverlay
-          files={modelFiles}
+          files={modelDetails.files || kiriMotoFiles}
           modelName={modelName}
-          isLoading={isLoadingFiles}
+          isLoading={isLoadingDetails}
           onClose={() => setShowDetails(false)}
+          license={modelDetails.license}
+          description={modelDetails.description}
         />
       )}
 
       {show3DViewer && !noDirectDownloadWebsites.has(websiteName.toLowerCase()) && (
         <Kiri3DOverlay
-          files={modelFiles}
+          files={kiriMotoFiles}
           modelName={modelName}
           onClose={() => setShow3DViewer(false)}
         />
