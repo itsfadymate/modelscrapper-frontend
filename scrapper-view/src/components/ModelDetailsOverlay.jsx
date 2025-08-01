@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import JSZip from 'jszip';
+import { ChevronDown, ChevronRight } from 'lucide-react'; // <-- Add this import
+import DOMPurify from 'dompurify';
 import './ModelDetailsOverlay.css';
 
-function ModelDetailsOverlay({ files, modelName, isLoading, onClose }) {
+function ModelDetailsOverlay({ files, modelName, isLoading, onClose, license, description }) {
   const [downloadingFiles, setDownloadingFiles] = useState(new Set());
   const [downloadingAll, setDownloadingAll] = useState(false);
+  const [descExpanded, setDescExpanded] = useState(false);
 
- 
-  
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
@@ -16,9 +17,9 @@ function ModelDetailsOverlay({ files, modelName, isLoading, onClose }) {
 
   const handleDownloadFile = async (file) => {
     if (!file.downloadUrl) return;
-    
+
     setDownloadingFiles(prev => new Set(prev).add(file.id || file.name));
-    
+
     try {
       const link = document.createElement('a');
       link.href = file.downloadUrl;
@@ -40,17 +41,17 @@ function ModelDetailsOverlay({ files, modelName, isLoading, onClose }) {
 
   const handleDownloadAll = async () => {
     if (files.length === 0) return;
-    
+
     setDownloadingAll(true);
-    
+
     try {
       const zip = new JSZip();
-  
+
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         if (file.downloadUrl) {
           console.log(`Fetching file ${i + 1}/${files.length}: ${file.name}`);
-          
+
           try {
             const response = await fetch(file.downloadUrl);
             if (response.ok) {
@@ -64,7 +65,7 @@ function ModelDetailsOverlay({ files, modelName, isLoading, onClose }) {
           }
         }
       }
-      
+
       const zipBlob = await zip.generateAsync({ type: 'blob' });
 
       const link = document.createElement('a');
@@ -75,7 +76,7 @@ function ModelDetailsOverlay({ files, modelName, isLoading, onClose }) {
       document.body.removeChild(link);
 
       URL.revokeObjectURL(link.href);
-      
+
       console.log('Zip download completed');
     } catch (error) {
       console.error('Zip creation failed:', error);
@@ -98,7 +99,7 @@ function ModelDetailsOverlay({ files, modelName, isLoading, onClose }) {
           <h2>Model Files</h2>
           <button onClick={onClose} className="close-btn-x">×</button>
         </div>
-        
+
         {modelName && (
           <div className="model-title">
             <h3>{modelName}</h3>
@@ -111,48 +112,84 @@ function ModelDetailsOverlay({ files, modelName, isLoading, onClose }) {
               <div className="loading-spinner"></div>
             </div>
           ) : (
-            files.length > 0 ? (
-              <>
-                <div className="download-all-container">
-                  <button 
-                    onClick={handleDownloadAll}
-                    disabled={downloadingAll || !files.some(file => file.downloadUrl)}
-                    className="download-all-btn"
-                  >
-                    {downloadingAll ? 'Downloading...' : `Download All (${files.length} files) as Zip`}
-                  </button>
+            <>
+              {license && (
+                <div className="model-license section-margin">
+                  <span className="license-label">License:</span>
+                  <span className="license-value">{license}</span>
                 </div>
+              )}
 
-                <div className="files-list">
-                  {files.map((file, index) => (
-                    <div key={file.id || index} className="file-item">
-                      <div className="file-info">
-                        <span className="file-name">{file.name}</span>
-                        {file.size && (
-                          <span className="file-size">({formatFileSize(file.size)})</span>
-                        )}
-                        {file.volume && (<span className="file-volume">({file.volume})</span>)}
-                      </div>
-                      <button
-                        onClick={() => handleDownloadFile(file)}
-                        disabled={downloadingFiles.has(file.id || file.name) || !file.downloadUrl}
-                        className="download-btn"
-                      >
-                        {downloadingFiles.has(file.id || file.name) ? (
-                          <span className="downloading">↓</span>
-                        ) : (
-                          '↓'
-                        )}
-                      </button>
-                    </div>
-                  ))}
+              {description && (
+                <div className={`model-description-bar${descExpanded ? ' expanded' : ''} section-margin`}>
+                  <button
+                    className="expand-btn"
+                    onClick={() => setDescExpanded(e => !e)}
+                    aria-expanded={descExpanded}
+                  >
+                    {descExpanded ? (
+                      <>
+                        <ChevronDown size={18} style={{ marginRight: 6 }} />
+                        Description
+                      </>
+                    ) : (
+                      <>
+                        <ChevronRight size={18} style={{ marginRight: 6 }} />
+                        Description
+                      </>
+                    )}
+                  </button>
+                  {descExpanded && (
+                    <div
+                      className="model-description-content"
+                      dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(description) }}
+                    />
+                  )}
                 </div>
-              </>
-            ) : (
-              <div className="no-files">
-                <p>No files available for this model.</p>
-              </div>
-            )
+              )}
+
+              {files.length > 0 ? (
+                <>
+                  <div className="download-all-container section-margin">
+                    <button
+                      onClick={handleDownloadAll}
+                      disabled={downloadingAll || !files.some(file => file.downloadUrl)}
+                      className="download-all-btn"
+                    >
+                      {downloadingAll ? 'Downloading...' : `Download All (${files.length} files) as Zip`}
+                    </button>
+                  </div>
+                  <div className="files-list">
+                    {files.map((file, index) => (
+                      <div key={file.id || index} className="file-item">
+                        <div className="file-info">
+                          <span className="file-name">{file.name}</span>
+                          {file.size && (
+                            <span className="file-size">({formatFileSize(file.size)})</span>
+                          )}
+                          {file.volume && (<span className="file-volume">({file.volume})</span>)}
+                        </div>
+                        <button
+                          onClick={() => handleDownloadFile(file)}
+                          disabled={downloadingFiles.has(file.id || file.name) || !file.downloadUrl}
+                          className="download-btn"
+                        >
+                          {downloadingFiles.has(file.id || file.name) ? (
+                            <span className="downloading">↓</span>
+                          ) : (
+                            '↓'
+                          )}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="no-files section-margin">
+                  <p>No files available for this model.</p>
+                </div>
+              )}
+            </>
           )}
         </div>
 
