@@ -1,3 +1,33 @@
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.input-label {
+  color: #275559;
+  font-weight: 500;
+  margin-bottom: 0.15rem;
+  font-size: 0.97rem;
+}
+
+.theme-input {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid #9edc29;
+  background: #f8f9fa;
+  color: #275559;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  outline: none;
+}
+
+.theme-input:focus {
+  border-color: #275559;
+  box-shadow: 0 0 0 2px #9edc2933;
+}
 .filter-overlay-backdrop {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
