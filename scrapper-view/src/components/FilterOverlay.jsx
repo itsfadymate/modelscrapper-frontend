@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Info } from 'lucide-react';
 import './FilterOverlay.css';
 
@@ -21,14 +21,29 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
     { id: 'grabcad'}
   ];
 
+  const noAdvancedSearchWebsites = ['printables', 'thangs', 'grabcad'];
+
   const handleBackDropClick = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
     }
   };
 
+
+ 
+  const isAdvancedSearchActive = descriptionSearchTerm.trim() !== '' || licenseSearchTerm.trim() !== '';
+
+
+  useEffect(() => {
+    if (isAdvancedSearchActive) {
+      setSelectedWebsites(prev => prev.filter(id => !noAdvancedSearchWebsites.includes(id)));
+      setoptimizedSearchWebsites(prev => prev.includes('thingiverse') ? prev : [...prev, 'thingiverse']);
+    }
+  }, [descriptionSearchTerm, licenseSearchTerm]);
+
   const handleWebsiteToggle = (websiteId) => {
-    setSelectedWebsites(prev => 
+    if (isAdvancedSearchActive && noAdvancedSearchWebsites.includes(websiteId)) return;
+    setSelectedWebsites(prev =>
       prev.includes(websiteId) ? prev.filter(id => id !== websiteId) : [...prev, websiteId]
     );
   };
@@ -42,6 +57,7 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
   };
 
   const handleOptimizedToggle = (websiteId) => {
+    if (isAdvancedSearchActive && websiteId === 'thingiverse') return; 
     setoptimizedSearchWebsites(
       prev => prev.includes(websiteId) ? prev.filter(id => id !== websiteId) : [...prev, websiteId]
     );
@@ -74,14 +90,15 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
   const getWebsiteInfo = (name) => {
     const fasterSearch = 'Optimized search speeds up search time but fetches less data about a model.';
     const slowerSearch = 'Optimized search slows down search time but improves results.';
+    const noAdvancedSearch=' Cannot search in description or license';
     switch (name) {
-      case 'thingiverse': return slowerSearch;
-      case 'printables': return fasterSearch;
+      case 'thingiverse': return slowerSearch + ' search in description and license available for optimized search only';
+      case 'printables': return fasterSearch + noAdvancedSearch;
       case 'sketchfab': return slowerSearch;
       case 'myminifactory': return slowerSearch;
       case 'cults3d': return slowerSearch;
-      case 'thangs': return fasterSearch;
-      case 'grabcad': return fasterSearch;
+      case 'thangs': return fasterSearch + noAdvancedSearch;
+      case 'grabcad': return fasterSearch + noAdvancedSearch;
       default: return '';
     }
   };
@@ -136,38 +153,49 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
           </div>
           
           <div className="website-list">
-            {availableWebsites.map(website => (
-              <div key={website.id} className="website-item improved-website-item">
-                <label className="website-label">
-                  <span>
-                    <input
-                      type="checkbox"
-                      checked={selectedWebsites.includes(website.id)}
-                      onChange={() => handleWebsiteToggle(website.id)}
-                      className="website-checkbox"
-                    />
-                    <span className="website-name">{website.id}</span>
-                  </span>
-                  <span className="website-info-icon">
-                    <Info size={16} />
-                    <span className="website-tooltip">
-                      {getWebsiteInfo(website.id)}
+            {availableWebsites.map(website => {
+              const isNotAdvanced = noAdvancedSearchWebsites.includes(website.id);
+              const disableCheckbox = isAdvancedSearchActive && isNotAdvanced;
+              const isThingiverse = website.id === 'thingiverse';
+              const optimizedChecked = isThingiverse && isAdvancedSearchActive
+                ? true
+                : optimizedSearchWebsites.includes(website.id);
+              const disableOptimized = isThingiverse && isAdvancedSearchActive;
+              return (
+                <div key={website.id} className="website-item improved-website-item">
+                  <label className="website-label">
+                    <span>
+                      <input
+                        type="checkbox"
+                        checked={selectedWebsites.includes(website.id)}
+                        onChange={() => handleWebsiteToggle(website.id)}
+                        className="website-checkbox"
+                        disabled={disableCheckbox}
+                      />
+                      <span className="website-name">{website.id}</span>
                     </span>
-                  </span>
-                </label>
-                <div className="optimized-container">
-                  <span className="optimized-label">Optimized search</span>
-                  <label className="optimized-switch small-switch">
-                    <input
-                      type="checkbox"
-                      checked={optimizedSearchWebsites.includes(website.id)}
-                      onChange={() => handleOptimizedToggle(website.id)}
-                    />
-                    <span className="slider"></span>
+                    <span className="website-info-icon">
+                      <Info size={16} />
+                      <span className="website-tooltip">
+                        {getWebsiteInfo(website.id)}
+                      </span>
+                    </span>
                   </label>
+                  <div className="optimized-container">
+                    <span className="optimized-label">Optimized search</span>
+                    <label className="optimized-switch small-switch">
+                      <input
+                        type="checkbox"
+                        checked={optimizedChecked}
+                        onChange={() => handleOptimizedToggle(website.id)}
+                        disabled={disableOptimized}
+                      />
+                      <span className="slider"></span>
+                    </label>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
