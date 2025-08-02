@@ -6,6 +6,8 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
   const [selectedWebsites, setSelectedWebsites] = useState(initialSelectedWebsites);
   const [showFreeOnly, setShowFreeOnly] = useState(initialShowFreeOnly);
   const [sortOption, setSortOption] = useState('default');
+  const [descriptionSearchTerm, setDescriptionSearchTerm] = useState('');
+  const [licenseSearchTerm, setLicenseSearchTerm] = useState('');
 
   const [optimizedSearchWebsites, setoptimizedSearchWebsites] = useState([]);
 
@@ -46,12 +48,27 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
   };
 
   const handleApplyFilter = () => {
-    onApply(selectedWebsites, showFreeOnly, optimizedSearchWebsites, sortOption);
+    onApply(
+      selectedWebsites,
+      showFreeOnly,
+      optimizedSearchWebsites,
+      sortOption,
+      descriptionSearchTerm,
+      licenseSearchTerm
+    );
   };
 
   const handleApplyAndSearch = () => {
     handleApplyFilter();
-    onSearch(searchQuery, selectedWebsites, showFreeOnly, optimizedSearchWebsites, sortOption);
+    onSearch(
+      searchQuery,
+      selectedWebsites,
+      showFreeOnly,
+      optimizedSearchWebsites,
+      sortOption,
+      descriptionSearchTerm,
+      licenseSearchTerm
+    );
   };
 
   const getWebsiteInfo = (name) => {
@@ -75,14 +92,38 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
         <h2>Filter Parameters</h2>
         
         <div className="filter-section">
-            <label className="filter-checkbox">
-                <input
-                    type="checkbox"
-                    checked={showFreeOnly}
-                    onChange={() => setShowFreeOnly(!showFreeOnly)}
-                />
-                Show Free Only
-            </label>
+          <label className="filter-checkbox">
+            <input
+              type="checkbox"
+              checked={showFreeOnly}
+              onChange={() => setShowFreeOnly(!showFreeOnly)}
+            />
+            Show Free Only
+          </label>
+
+          <div className="input-group">
+            <label htmlFor="description-search" className="input-label">Description Search</label>
+            <input
+              id="description-search"
+              type="text"
+              className="theme-input"
+              placeholder="Search in description (supports java regex)"
+              value={descriptionSearchTerm}
+              onChange={e => setDescriptionSearchTerm(e.target.value)}
+            />
+          </div>
+          <div className="input-group">
+            <label htmlFor="license-search" className="input-label">License Search</label>
+            <input
+              id="license-search"
+              type="text"
+              className="theme-input"
+              placeholder="Search for license (supports java regex)"
+              value={licenseSearchTerm}
+              onChange={e => setLicenseSearchTerm(e.target.value)}
+            />
+          </div>
+
           <h3>Select Websites to Scrape</h3>
           
           <div className="select-all-container">
