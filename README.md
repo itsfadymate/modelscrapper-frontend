@@ -49,7 +49,8 @@ VITE_KIRI_MOTO_URL=https://grid.space/kiri/
 <img width="1862" height="909" alt="image" src="https://github.com/user-attachments/assets/949e7ec0-ace5-420a-8826-30e611e702e9" />
 
 ### Filter overlay
-<img width="1892" height="919" alt="image" src="https://github.com/user-attachments/assets/4ca04d1c-fd31-4a5b-a206-97f6ab3f5566" />
+<img width="1895" height="912" alt="image" src="https://github.com/user-attachments/assets/cb21972c-b99b-449b-8eb2-dc9ad55d1474" />
+<img width="1885" height="916" alt="image" src="https://github.com/user-attachments/assets/b4c91ff3-4364-4387-9daf-ec1e69c36f56" />
 
 ### Example search pages
 <img width="1863" height="896" alt="image" src="https://github.com/user-attachments/assets/cdd19d01-927f-480e-8242-43f5f2f9ca64" />
