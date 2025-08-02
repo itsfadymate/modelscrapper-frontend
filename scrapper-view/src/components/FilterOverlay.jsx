@@ -2,14 +2,22 @@ import { useState, useEffect } from 'react';
 import { Info } from 'lucide-react';
 import './FilterOverlay.css';
 
-function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedWebsites = [], initialShowFreeOnly = false }) {
-  const [selectedWebsites, setSelectedWebsites] = useState(initialSelectedWebsites);
-  const [showFreeOnly, setShowFreeOnly] = useState(initialShowFreeOnly);
-  const [sortOption, setSortOption] = useState('default');
-  const [descriptionSearchTerm, setDescriptionSearchTerm] = useState('');
-  const [licenseSearchTerm, setLicenseSearchTerm] = useState('');
 
-  const [optimizedSearchWebsites, setoptimizedSearchWebsites] = useState([]);
+function FilterOverlay({onClose,onApply,onSearch,searchQuery,filterState}) {
+  const {
+    selectedWebsites,
+    setSelectedWebsites,
+    showFreeOnly,
+    setShowFreeOnly,
+    sortOption,
+    setSortOption,
+    optimizedSearchWebsites,
+    setOptimizedSearchWebsites,
+    descriptionSearchTerm,
+    setDescriptionSearchTerm,
+    licenseSearchTerm,
+    setLicenseSearchTerm
+  } = filterState;
 
   const availableWebsites = [
     { id: 'thingiverse', },
@@ -37,7 +45,7 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
   useEffect(() => {
     if (isAdvancedSearchActive) {
       setSelectedWebsites(prev => prev.filter(id => !noAdvancedSearchWebsites.includes(id)));
-      setoptimizedSearchWebsites(prev => prev.includes('thingiverse') ? prev : [...prev, 'thingiverse']);
+      setOptimizedSearchWebsites(prev => prev.includes('thingiverse') ? prev : [...prev, 'thingiverse']);
     }
   }, [descriptionSearchTerm, licenseSearchTerm]);
 
@@ -57,8 +65,8 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
   };
 
   const handleOptimizedToggle = (websiteId) => {
-    if (isAdvancedSearchActive && websiteId === 'thingiverse') return; 
-    setoptimizedSearchWebsites(
+    if (isAdvancedSearchActive && websiteId === 'thingiverse') return;
+    setOptimizedSearchWebsites(
       prev => prev.includes(websiteId) ? prev.filter(id => id !== websiteId) : [...prev, websiteId]
     );
   };
@@ -216,10 +224,7 @@ function FilterOverlay({ onClose, onApply,onSearch,searchQuery, initialSelectedW
 
         <div className="filter-actions">
           <button onClick={handleApplyAndSearch} className="apply-btn">
-            Apply and search
-          </button>
-          <button onClick={handleApplyFilter} className="apply-btn">
-            Apply Filter
+            Search
           </button>
           <button onClick={onClose} className="close-btn">Close</button>
         </div>

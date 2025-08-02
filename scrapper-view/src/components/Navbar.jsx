@@ -97,8 +97,20 @@ function Navbar({ onSearch,setShowHomePage }) {
           onApply={handleApplyFilter}
           onSearch={onSearch}
           searchQuery={searchQuery}
-          initialSelectedWebsites={selectedWebsites}
-          initialShowFreeOnly={showFreeOnly}
+          filterState={{
+            selectedWebsites,
+            setSelectedWebsites,
+            showFreeOnly,
+            setShowFreeOnly,
+            sortOption,
+            setSortOption,
+            optimizedSearchWebsites: searchUsingGoogle,
+            setOptimizedSearchWebsites: setSearchUsingGoogle,
+            descriptionSearchTerm,
+            setDescriptionSearchTerm,
+            licenseSearchTerm,
+            setLicenseSearchTerm
+          }}
         />
       )}
     </nav>
