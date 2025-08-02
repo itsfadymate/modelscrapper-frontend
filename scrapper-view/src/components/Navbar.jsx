@@ -97,6 +97,7 @@ function Navbar({ onSearch,setShowHomePage }) {
           onApply={handleApplyFilter}
           onSearch={onSearch}
           searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
           filterState={{
             selectedWebsites,
             setSelectedWebsites,

@@ -3,7 +3,7 @@ import { Info } from 'lucide-react';
 import './FilterOverlay.css';
 
 
-function FilterOverlay({onClose,onApply,onSearch,searchQuery,filterState}) {
+function FilterOverlay({onClose,onApply,onSearch,searchQuery,setSearchQuery,filterState}) {
   const {
     selectedWebsites,
     setSelectedWebsites,
@@ -114,8 +114,23 @@ function FilterOverlay({onClose,onApply,onSearch,searchQuery,filterState}) {
   return (
     <div className="filter-overlay-backdrop" onClick={handleBackDropClick}>
       <div className="filter-overlay">
-        <h2>Filter Parameters</h2>
+        <h2>Search Term</h2>
         
+        <div className="filter-section">
+          <div className="input-group">
+            <input
+              id="filter-searchbar"
+              type="text"
+              className="theme-input"
+              placeholder="Search..."
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <h2>Filter Parameters</h2>
+
         <div className="filter-section">
           <label className="filter-checkbox">
             <input
