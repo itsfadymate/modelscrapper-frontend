@@ -49,7 +49,15 @@ function App() {
       }
     }
 
-  const handleSearch = async (query, selectedWebsites = [], showFreeOnly = false, optimizedSearchWebsites = [], sortOption = 'default') => {
+  const handleSearch = async (
+    query,
+    selectedWebsites = [],
+    showFreeOnly = false,
+    optimizedSearchWebsites = [],
+    sortOption = 'default',
+    descriptionSearchTerm = '',
+    licenseSearchTerm = ''
+  ) => {
     for (let website of selectedWebsites){
       if (slowWebsites.includes(website)){
         setIsScrapingSlowWebsite(true);
@@ -77,6 +85,13 @@ function App() {
 
       if (optimizedSearchWebsites.length > 0) {
         params.append('sourcesToGoogle', optimizedSearchWebsites.join(','));
+      }
+
+      if (descriptionSearchTerm && descriptionSearchTerm.trim() !== '') {
+        params.append('descriptionSearchTerm', descriptionSearchTerm);
+      }
+      if (licenseSearchTerm && licenseSearchTerm.trim() !== '') {
+        params.append('licenseSearchTerm', licenseSearchTerm);
       }
 
       const apiUrl = `${baseUrl}?${params.toString()}`;

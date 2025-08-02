@@ -18,6 +18,8 @@ function Navbar({ onSearch,setShowHomePage }) {
   ]);
   const [searchUsingGoogle, setSearchUsingGoogle] = useState([]);
   const [showFreeOnly, setShowFreeOnly] = useState(false);
+  const [descriptionSearchTerm, setDescriptionSearchTerm] = useState('');
+  const [licenseSearchTerm, setLicenseSearchTerm] = useState('');
 
   const handleSearch = () => {
     console.log('Searching for:', searchQuery);
@@ -25,9 +27,13 @@ function Navbar({ onSearch,setShowHomePage }) {
     console.log('Show free only:', showFreeOnly);
     console.log('websites to search using google:', searchUsingGoogle);
     console.log('Sort option:', sortOption);
-    
+    console.log('Description search term:', descriptionSearchTerm);
+    console.log('License search term:', licenseSearchTerm);
+
     if (onSearch && searchQuery.trim()) {
-      onSearch(searchQuery.trim(), selectedWebsites, showFreeOnly, searchUsingGoogle, sortOption);
+      onSearch(searchQuery.trim(), selectedWebsites, showFreeOnly, searchUsingGoogle, sortOption,
+        descriptionSearchTerm,
+        licenseSearchTerm);
     }
   };
 
@@ -37,11 +43,20 @@ function Navbar({ onSearch,setShowHomePage }) {
     }
   };
 
-  const handleApplyFilter = (websites, freeOnly, searchUsingGoogle, sortOption) => {
+  const handleApplyFilter = (
+    websites,
+    freeOnly,
+    searchUsingGoogle,
+    sortOption,
+    descriptionSearchTermValue,
+    licenseSearchTermValue
+  ) => {
     setSelectedWebsites(websites);
     setShowFreeOnly(freeOnly);
     setSearchUsingGoogle(searchUsingGoogle);
     setSortOption(sortOption);
+    setDescriptionSearchTerm(descriptionSearchTermValue);
+    setLicenseSearchTerm(licenseSearchTermValue);
     setShowFilter(false);
   };
 
